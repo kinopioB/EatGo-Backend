@@ -1,34 +1,25 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: Feature request
+about: Suggest an idea for this project
 title: ''
-labels: ''
+labels: enhancement
 assignees: ''
 
 ---
 
 <!--
-✅ 어떤 버그인지 자세히 알려주세요.
-✅ 스크린샷이 있으면 더 좋아요🙂
+✅ 어떤 기능인지 구체적으로 설명해주세요.
 -->
-## Describe the bug
+## Feature Description
 - 
 
 <!--
-✅ 버그를 재현하는 과정을 알려주세요.
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+✅ 개발이 필요한 기능을 요약해주세요.
 -->
 
-## To Reproduce
+## Todo list
 
-<!--
-✅ 기대하는 결과를 설명해주세요.
--->
-## Expected behavior
-- 
+- [ ] 
 
 <!--
 ✅ Label을 설정하였는지 확인해주세요.
