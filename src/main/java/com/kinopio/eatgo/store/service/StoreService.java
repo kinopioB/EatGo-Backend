@@ -8,11 +8,12 @@ import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 
 public interface StoreService {
 	
-	List<StoreDto> getAllStores();
-	List<ReviewDto> getAllReviews();
-	int createReview(ReviewDto reviewDto);
 	
-	List<StoreDto> getStrores(); // 삭제 예정 
+	List<StoreDto> getStores(); // 삭제 예정 
 
-	List<StoreSimpleResponseDto> getAllStore();
+	List<StoreSimpleResponseDto> getAllStores();
+	
+	List<ReviewDto> getAllReviews();
+	
+	int createReview(ReviewDto reviewDto);
 }

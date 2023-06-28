@@ -9,9 +9,8 @@ import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 public interface StoreDao {
 	
 	List<StoreDto> selectStores();
+	List<StoreSimpleResponseDto> selectAllStore();
+
 	List<ReviewDto> selectReviews();
 	int insertReview(ReviewDto reviewDto);
-	
-
-	List<StoreSimpleResponseDto> selectAllStore();
 }

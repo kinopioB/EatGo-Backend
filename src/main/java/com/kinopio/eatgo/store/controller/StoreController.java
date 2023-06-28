@@ -29,20 +29,26 @@ public class StoreController {
 	
 	private final StoreService storeService;
 	
+	// 삭제 예
 	@GetMapping("locations")
 	public ResponseEntity<Map<String, List>> getAllStroesLocations() {
-		
-		List<StoreDto> list = storeService.getAllStores();
+		List<StoreDto> list = storeService.getStores();
 		Map<String, List> result = new HashMap<>();
 		result.put("res", list);
 		log.info(list);
 		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
+	@GetMapping
+	public ResponseEntity<List<StoreSimpleResponseDto>> getAllStores(){
+		List<StoreSimpleResponseDto> stores = storeService.getAllStores();
+		return new ResponseEntity<List<StoreSimpleResponseDto>> (stores, HttpStatus.OK);
+	}
+	
+
 	
 	@GetMapping("reviews")
 	public ResponseEntity<List<ReviewDto>> getAllReviews(){
-		
 		List<ReviewDto> reviewListResult = storeService.getAllReviews();
 		return new ResponseEntity<List<ReviewDto>>(reviewListResult, HttpStatus.ACCEPTED);
 	}

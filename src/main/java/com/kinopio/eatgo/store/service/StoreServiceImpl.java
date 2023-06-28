@@ -18,16 +18,16 @@ public class StoreServiceImpl implements StoreService{
 	private final StoreDao storeDao;
 	
 
-
 	@Override
-	public List<StoreSimpleResponseDto> getAllStore() {
-		
-		return storeDao.selectAllStore();
-	}
-	@Override
-	public List<StoreDto> getStrores() { // 삭제 예정 
+	public List<StoreDto> getStores() { // 삭제 예정 
 		return null;
 	}
+	
+	@Override
+	public List<StoreSimpleResponseDto> getAllStores() {
+		return storeDao.selectAllStore();
+	}
+	
 
 	@Override
 	public List<ReviewDto> getAllReviews() {
@@ -38,7 +38,6 @@ public class StoreServiceImpl implements StoreService{
 	public int createReview(ReviewDto reviewDto) {
 		return storeDao.insertReview(reviewDto);
 	}
-	
-	
+
 	
 }
