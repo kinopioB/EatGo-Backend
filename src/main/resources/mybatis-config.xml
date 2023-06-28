@@ -14,6 +14,7 @@
 
   <typeAliases>
       <typeAlias alias="LoginResponseDto" type="com.kinopio.eatgo.user.dto.LoginResponseDto"/>
+      <typeAlias alias="StoreDto" type="com.kinopio.eatgo.store.dto.StoreDto"/>
   
    
   </typeAliases>
