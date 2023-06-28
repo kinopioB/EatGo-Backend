@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.kinopio.eatgo.store.dao.StoreDao;
+import com.kinopio.eatgo.store.dto.ReviewDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 
@@ -27,4 +28,17 @@ public class StoreServiceImpl implements StoreService{
 	public List<StoreDto> getStrores() { // 삭제 예정 
 		return null;
 	}
+
+	@Override
+	public List<ReviewDto> getAllReviews() {
+		return storeDao.selectReviews();
+	}
+
+	@Override
+	public int createReview(ReviewDto reviewDto) {
+		return storeDao.insertReview(reviewDto);
+	}
+	
+	
+	
 }
