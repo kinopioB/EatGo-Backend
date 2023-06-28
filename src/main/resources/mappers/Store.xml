@@ -7,6 +7,12 @@
 	<select id="selectStores" resultType="StoreDto">
 		SELECT * from store
 	</select>
-
-
+	
+	<select id="selectReviews" resultType="ReviewDto">
+		SELECT * FROM reviews
+	</select>
+	
+	<insert id="insertReview">
+		INSERT * INTO reviews WHERE store_id = #{storeId} 
+	</insert>
 </mapper>
