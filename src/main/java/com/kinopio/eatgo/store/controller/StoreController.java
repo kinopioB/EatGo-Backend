@@ -20,7 +20,7 @@ import lombok.extern.log4j.Log4j2;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("stores")
-public class StroeController {
+public class StoreController {
 	private final StoreService storeService;
 	
 	@GetMapping("locations")
