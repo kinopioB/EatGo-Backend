@@ -13,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class StoreDaoImpl implements StoreDao{
+public class StoreDaoImpl implements StoreDao {
 	private final SqlSession sqlSession;
-	 
+
 	@Override
 	public List<StoreDto> selectStores() {
 		String statement = "store.selectStores";
@@ -23,18 +23,17 @@ public class StoreDaoImpl implements StoreDao{
 	}
 
 	@Override
-	public List<ReviewDto> selectReviews() throws Exception{
+	public List<ReviewDto> selectReviews() {
 		String statement = "store.selectReviews";
 		return sqlSession.selectList(statement);
 	}
 
 	@Override
-	public int insertReview(ReviewDto reviewDto) throws Exception{
+	public int insertReview(ReviewDto reviewDto) throws Exception {
 		String statement = "store.insertReview";
 		return sqlSession.insert(statement, reviewDto);
 	}
-	
-	
+
 	public List<StoreSimpleResponseDto> selectAllStore() {
 		String statement = "store.selectAllStore";
 		return sqlSession.selectList(statement);
@@ -45,6 +44,5 @@ public class StoreDaoImpl implements StoreDao{
 		String statement = "store.selectStoreReviews";
 		return sqlSession.selectList(statement, storeId);
 	}
-	
-	
+
 }

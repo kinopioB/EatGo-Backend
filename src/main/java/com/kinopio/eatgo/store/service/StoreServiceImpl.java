@@ -32,12 +32,7 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public List<ReviewDto> getAllReviews() {
-		try {
-			return storeDao.selectReviews();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return storeDao.selectReviews();
 	}
 
 	@Override
@@ -53,11 +48,6 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public List<ReviewDto> getAllStoreReviews(int storeId) {
-		try {
-			return storeDao.selectStoreReviews(storeId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return storeDao.selectStoreReviews(storeId);
 	}
 }

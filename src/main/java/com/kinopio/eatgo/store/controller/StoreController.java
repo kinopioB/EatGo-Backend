@@ -52,9 +52,6 @@ public class StoreController {
 	public ResponseEntity<List<ReviewDto>> getAllReviews() {
 
 		List<ReviewDto> reviewsResult = storeService.getAllReviews();
-		if (reviewsResult.isEmpty()) {
-			return new ResponseEntity<List<ReviewDto>>(reviewsResult, HttpStatus.NO_CONTENT);
-		}
 		return new ResponseEntity<List<ReviewDto>>(reviewsResult, HttpStatus.OK);
 	}
 
@@ -63,9 +60,6 @@ public class StoreController {
 	public ResponseEntity<List<ReviewDto>> getAllStoreReviews(@PathVariable int storeId) {
 
 		List<ReviewDto> storeReviewResult = storeService.getAllStoreReviews(storeId);
-		if (storeReviewResult.isEmpty()) {
-			return new ResponseEntity<List<ReviewDto>>(storeReviewResult, HttpStatus.NO_CONTENT);
-		}
 		return new ResponseEntity<List<ReviewDto>>(storeReviewResult, HttpStatus.OK);
 	}
 
