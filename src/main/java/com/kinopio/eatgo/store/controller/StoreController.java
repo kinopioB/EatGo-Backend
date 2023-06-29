@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kinopio.eatgo.store.dto.ReviewDto;
+import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
+import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 import com.kinopio.eatgo.store.service.StoreService;
 
@@ -39,13 +41,39 @@ public class StoreController {
 		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
+	 /**
+     * 가게 전체 조회 ( 지도 마커용 ) api
+     * @return ResponseEntity<List<StoreSimpleResponseDto>> 
+     */
 	@GetMapping
 	public ResponseEntity<List<StoreSimpleResponseDto>> getAllStores(){
 		List<StoreSimpleResponseDto> stores = storeService.getAllStores();
 		return new ResponseEntity<List<StoreSimpleResponseDto>> (stores, HttpStatus.OK);
 	}
 	
-
+	
+	 /**
+     * 특정 가게 간단 조회 ( 지도용 ) api
+     * @return ResponseEntity<StoreResponseDto> 
+     */
+	@GetMapping("/store/{storeId}")
+	public ResponseEntity<StoreResponseDto> getStore(@PathVariable int storeId){
+		StoreResponseDto store = storeService.getStore(storeId);
+        return new ResponseEntity<>(store, HttpStatus.OK);
+    }
+	
+	/*
+	 * 특정 가게 상세 조회 ( 상세 페이지용 ) api
+	 * @return ResponseEntity<StoreDetailResponseDto>
+	 */
+	@GetMapping("/store/detail/{storeId}")
+	public ResponseEntity<StoreDetailResponseDto> getStoreDetail(@PathVariable int storeId){
+	
+		StoreDetailResponseDto storeDetail = storeService.getStoreDetail(storeId);
+		return new ResponseEntity<>(storeDetail, HttpStatus.OK);
+	}
+	
+	
 	
 	@GetMapping("reviews")
 	public ResponseEntity<List<ReviewDto>> getAllReviews(){

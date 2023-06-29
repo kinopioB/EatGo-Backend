@@ -8,8 +8,6 @@
 	
 	<select id="selectAllStore" resultType="StoreSimpleResponseDto">
 		select * from store join category on store.category_id = category.category_id
-
-
 	</select>
 	
 	<select id="selectReviews" resultType="ReviewDto">
