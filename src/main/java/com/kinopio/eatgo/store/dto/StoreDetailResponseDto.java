@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,8 +23,8 @@ public class StoreDetailResponseDto {
 	private Integer storeId;
 	private String storeName;
 	private String address;
-	private Integer postionX;
-	private Integer postionY;
+	private Integer positionX;
+	private Integer positionY;
 	private Integer isOpen;
 	private String thumbnail;
 	private Integer createdType;
@@ -43,16 +44,16 @@ public class StoreDetailResponseDto {
 	private List<OpenInfo> openInfos;
 	
 	// 영업 이력 정보 
-	private List<StoreHistory> storeHistorys;
+	private List<StoreHistory> storeHistories;
 	
 	// 메뉴 정보
 	private List<Menu> menus;
 	
 	// 리뷰
-	private List<Review> reviews;
+	private List<ReviewDto> reviews;
 	
 	// 리뷰 평점 평균
-	private Integer ratingAverage;
+	private Float ratingAverage;
 	
 	
 	
