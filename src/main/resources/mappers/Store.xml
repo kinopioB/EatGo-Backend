@@ -14,6 +14,94 @@
 	<select id="selectReviews" resultType="ReviewResponseDto">
 		SELECT * FROM review
 	</select>
+		
+	<resultMap id="StoreDetailMap" type="StoreDetailResponseDto">
+		<result property="storeId" column="store_id"></result>
+		<result property="storeName" column="store_name"></result>
+		<result property="address" column="address"></result>
+		<result property="positionX" column="position_x"></result>
+		<result property="postionY" column="postion_y"></result>
+		<result property="thumbnail" column="thumbnail"></result>
+		<result property="createdType" column="created_type"></result>
+		<result property="createdAt" column="created"></result>
+		
+		<result property="userId" column="user_id"></result>
+		<result property="userName" column="user_name"></result>
+		
+		<result property="categoryId" column="category_id"></result>
+		<result property="categoryName" column="category_name"></result>
+		
+		<collection property="tags" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.Tag" select="selectTagsByStoreId"></collection>		
+		<collection property="openInfos" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.OpenInfo" select="selectOpenInfoByStoreId"></collection>		
+		<collection property="storeHistories" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.entity.StoreHistory" select="selectStoreHistoryByStoreId"></collection>
+		<collection property="menus" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.Menu" select="selectMenusByStoreId"></collection>		
+		<collection property="reviews" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.dto.ReviewDto" select="selectReviewsByStoreId"></collection>		
+	
+	</resultMap>
+  
+  
+  <resultMap id="summaryStoreResult" type="StoreResponseDto">
+		<result column="store_id" property="storeId"></result>
+		<result column="store_name" property="storeName"></result>
+		<result column="address" property="address"></result>
+		<result column="position_x" property="positionX"></result>
+		<result column="position_y" property="positionY"></result>
+		<result column="isopen" property="isOpen"></result>
+		<result column="user_id" property="userId"></result>
+		<result column="user_name" property="userName"></result>
+		<result column="category_id" property="categoryId"></result>
+		<result column="category_name" property="categoryName"></result>
+		<collection property="tags" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.Tag" select="selectTagsByStoreId"></collection>
+		<collection property="openInfos" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.OpenInfo" select="selectOpenInfoByStoreId"></collection>
+	</resultMap>
+	
+	<select id="selectStoreDetailById" parameterType="int" resultMap="StoreDetailMap">
+		select * from store join "user" on store.user_id = "user".user_id join category on store.category_id = category.category_id where store_id =#{storeId}
+	</select>
+	
+	<select id="selectTagsByStoreId" parameterType="int" resultType="com.kinopio.eatgo.store.entity.Tag">
+		select * from tag where store_id=#{storeId}
+	</select>
+	
+	<select id="selectOpenInfoByStoreId" parameterType="int" resultType="com.kinopio.eatgo.store.entity.OpenInfo">
+		select * from open_info where store_id=#{storeId}
+	</select>
+
+	<select id="selectStoreHistoryByStoreId" parameterType="int" resultType="com.kinopio.eatgo.store.entity.StoreHistory">
+		select * from store_history where store_id=#{storeId}
+	</select>
+	<select id="selectMenusByStoreId" parameterType="int" resultType="com.kinopio.eatgo.store.entity.OpenInfo">
+		select * from open_info where store_id=#{storeId}
+	</select>
+	
+	<select id="selectReviewsByStoreId" parameterType="int" resultType="ReviewDto">
+		select * from review join "user" on review.user_id = "user".user_id where store_id=#{storeId}
+	</select>
+
+	
+	<select id="selectAllStore" resultType="StoreSimpleResponseDto">
+		select * from store join "user" on store.user_id = "user".user_id join category on store.category_id = category.category_id where store_id =#{storeId}
+	</select>
+	
+
+	<select id="selectStore" parameterType="int" resultMap="summaryStoreResult">
+		SELECT *
+		FROM store
+		LEFT JOIN "user"
+		ON store.user_id = "user".user_id
+		LEFT JOIN category
+		ON store.category_id = category.category_id
+		WHERE store.store_id = #{storeId}
+	</select>
+
+	
+	<select id="selectAverageRating" parameterType="int" resultType="int">
+		SELECT AVG(rating) as rating_average FROM review WHERE store_id = #{storeId}
+	</select>
+  
+  <select id="selectReviews" resultType="ReviewDto">
+		SELECT * FROM reviews
+	</select>
 
 	<insert id="insertReview" parameterType="ReviewRequestDto">
 		INSERT INTO
@@ -53,4 +141,5 @@
 		ON s.store_id = t.store_id
 		WHERE t.tag_name = #{tagName}
 	</select>
+
 </mapper>

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import com.kinopio.eatgo.store.dao.StoreDao;
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
+import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
+import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 
 import lombok.RequiredArgsConstructor;
@@ -57,5 +59,32 @@ public class StoreServiceImpl implements StoreService {
 		return storeDao.selectTagStores(tagName);
 	}
 	
+
+
+	@Override
+	public StoreResponseDto getStore(int storeId) {
+		return storeDao.selectStore(storeId);
+	}
+
+
+	@Override
+	public StoreDetailResponseDto getStoreDetail(int storeId) {
+		StoreDetailResponseDto storeDetail = storeDao.selectStoreDetailById(storeId);
+		storeDetail.setRatingAverage(storeDao.selectStoreAverageRating(storeId));
+		return storeDetail;
+	}
+
+	
+	
+	@Override
+	public List<ReviewDto> getAllReviews() {
+		return storeDao.selectReviews();
+	}
+
+	@Override
+	public int createReview(ReviewDto reviewDto) {
+		return storeDao.insertReview(reviewDto);
+	}
+
 	
 }
