@@ -10,34 +10,54 @@ import com.kinopio.eatgo.store.dto.StoreDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Service
 @RequiredArgsConstructor
-public class StoreServiceImpl implements StoreService{
-	
+public class StoreServiceImpl implements StoreService {
+
 	private final StoreDao storeDao;
-	
 
 	@Override
-	public List<StoreDto> getStores() { // 삭제 예정 
+	public List<StoreDto> getStores() { // 삭제 예정
 		return null;
 	}
-	
+
 	@Override
 	public List<StoreSimpleResponseDto> getAllStores() {
 		return storeDao.selectAllStore();
 	}
-	
 
 	@Override
 	public List<ReviewDto> getAllReviews() {
-		return storeDao.selectReviews();
+		try {
+			return storeDao.selectReviews();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
-	public int createReview(ReviewDto reviewDto) {
-		return storeDao.insertReview(reviewDto);
+	public Boolean createReview(ReviewDto reviewDto) {
+		try {
+			storeDao.insertReview(reviewDto);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
-	
+	@Override
+	public List<ReviewDto> getAllStoreReviews(int storeId) {
+		try {
+			return storeDao.selectStoreReviews(storeId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

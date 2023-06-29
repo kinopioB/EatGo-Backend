@@ -5,18 +5,23 @@
 
 <mapper namespace="store">
 
-	
 	<select id="selectAllStore" resultType="StoreSimpleResponseDto">
 		select * from store join category on store.category_id = category.category_id
-
-
 	</select>
 	
 	<select id="selectReviews" resultType="ReviewDto">
 		SELECT * FROM reviews
 	</select>
 	
-	<insert id="insertReview">
-		INSERT * INTO reviews WHERE store_id = #{storeId} 
+	<insert id="insertReview" parameterType="ReviewDto">
+		INSERT INTO reviews(user_id, store_id, content, rating) 
+		VALUES(#{userId}, #{storeId}, #{content}, #{rating})
+		WHERE store_id = #{storeId} 
 	</insert>
+	
+	<select id="selectStoreReviews" resultType="ReviewDto" parameterType="int">
+		SELECT user_id, content, rating, created_at  
+		FROM reviews 
+		WHERE store_id = #{storeId}
+	</select>
 </mapper>

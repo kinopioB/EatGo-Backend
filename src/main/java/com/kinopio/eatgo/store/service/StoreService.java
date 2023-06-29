@@ -15,5 +15,8 @@ public interface StoreService {
 	
 	List<ReviewDto> getAllReviews();
 	
-	int createReview(ReviewDto reviewDto);
+	Boolean createReview(ReviewDto reviewDto);
+
+	List<ReviewDto> getAllStoreReviews(int storeId);
+	
 }

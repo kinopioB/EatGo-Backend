@@ -10,7 +10,7 @@ public interface StoreDao {
 	
 	List<StoreDto> selectStores();
 	List<StoreSimpleResponseDto> selectAllStore();
-
-	List<ReviewDto> selectReviews();
-	int insertReview(ReviewDto reviewDto);
+	List<ReviewDto> selectReviews() throws Exception;
+	int insertReview(ReviewDto reviewDto) throws Exception;
+	List<ReviewDto> selectStoreReviews(int storeId) throws Exception;
 }
