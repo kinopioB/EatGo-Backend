@@ -35,6 +35,16 @@ public class StoreServiceImpl implements StoreService{
 	public StoreResponseDto getStore(int storeId) {
 		return null;
 	}
+
+
+	@Override
+	public StoreDetailResponseDto getStoreDetail(int storeId) {
+		StoreDetailResponseDto storeDetail = storeDao.selectStoreDetailById(storeId);
+		storeDetail.setRatingAverage(storeDao.selectStoreAverageRating(storeId));
+		return storeDetail;
+	}
+
+	
 	
 	@Override
 	public List<ReviewDto> getAllReviews() {
@@ -45,12 +55,6 @@ public class StoreServiceImpl implements StoreService{
 	public int createReview(ReviewDto reviewDto) {
 		return storeDao.insertReview(reviewDto);
 	}
-
-	@Override
-	public StoreDetailResponseDto getStoreDetail(int storeId) {
-		return null;
-	}
-
 
 	
 }
