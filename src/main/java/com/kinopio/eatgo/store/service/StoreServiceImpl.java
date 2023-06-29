@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.kinopio.eatgo.store.dao.StoreDao;
-import com.kinopio.eatgo.store.dto.ReviewDto;
+import com.kinopio.eatgo.store.dto.ReviewRequestDto;
+import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 
@@ -31,14 +32,9 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public List<ReviewDto> getAllReviews() {
-		return storeDao.selectReviews();
-	}
-
-	@Override
-	public Boolean createReview(ReviewDto reviewDto) {
+	public Boolean createReview(ReviewRequestDto reviewRequestDto) {
 		try {
-			storeDao.insertReview(reviewDto);
+			storeDao.insertReview(reviewRequestDto);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -47,7 +43,19 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
-	public List<ReviewDto> getAllStoreReviews(int storeId) {
+	public List<ReviewResponseDto> getAllStoreReviews(int storeId) {
 		return storeDao.selectStoreReviews(storeId);
 	}
+
+	@Override
+	public List<StoreSimpleResponseDto> getCategoryStores(int categoryId) {
+		return storeDao.selectCategoryStores(categoryId);
+	}
+
+	@Override
+	public List<StoreSimpleResponseDto> getTagStores(String tagName) {
+		return storeDao.selectTagStores(tagName);
+	}
+	
+	
 }

@@ -5,20 +5,19 @@
 
 <configuration>
 
-<settings>
+  <settings>
     <setting name="jdbcTypeForNull" value="NULL"/>
     <setting name="logImpl" value="LOG4J2"/>
     <setting name="mapUnderscoreToCamelCase" value="true" />
     <setting name="useGeneratedKeys" value="true"/>
   </settings>
 
-
   <typeAliases>
       <typeAlias alias="LoginResponseDto" type="com.kinopio.eatgo.user.dto.LoginResponseDto"/>
       <typeAlias alias="StoreDto" type="com.kinopio.eatgo.store.dto.StoreDto"/>
       <typeAlias alias="StoreSimpleResponseDto" type="com.kinopio.eatgo.store.dto.StoreSimpleResponseDto"/>
-  
-   
+      <typeAlias alias="ReviewResponseDto" type="com.kinopio.eatgo.store.dto.ReviewResponseDto"/>
+      <typeAlias alias="ReviewRequestDto" type="com.kinopio.eatgo.store.dto.ReviewRequestDto"/>
   </typeAliases>
   
 </configuration>
