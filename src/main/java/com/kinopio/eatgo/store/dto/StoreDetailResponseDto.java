@@ -23,8 +23,8 @@ public class StoreDetailResponseDto {
 	private Integer storeId;
 	private String storeName;
 	private String address;
-	private Integer positionX;
-	private Integer positionY;
+	private Double positionX;
+	private Double positionY;
 	private Integer isOpen;
 	private String thumbnail;
 	private Integer createdType;

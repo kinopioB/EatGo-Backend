@@ -71,7 +71,7 @@
 
 		
 	<select id="selectAllStore" resultType="StoreSimpleResponseDto">
-		select * from store join "user" on store.user_id = "user".user_id join category on store.category_id = category.category_id where store_id =#{storeId}
+		select * from store join "user" on store.user_id = "user".user_id join category on store.category_id = category.category_id
 	</select>
 	
 

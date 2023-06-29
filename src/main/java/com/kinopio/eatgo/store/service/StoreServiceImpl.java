@@ -10,6 +10,7 @@ import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
+import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 
@@ -23,11 +24,6 @@ import lombok.extern.log4j.Log4j2;
 public class StoreServiceImpl implements StoreService {
 
 	private final StoreDao storeDao;
-
-	@Override
-	public List<StoreDto> getStores() { // 삭제 예정
-		return null;
-	}
 
 	@Override
 	public List<StoreSimpleResponseDto> getAllStores() {
@@ -80,6 +76,12 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public List<ReviewDto> getAllReviews() {
 		return storeDao.selectReviews();
+	}
+
+	@Override
+	public Boolean createStore(StoreRequestDto storeRequestDto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
