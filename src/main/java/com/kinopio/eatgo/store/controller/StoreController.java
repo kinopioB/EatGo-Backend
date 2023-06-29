@@ -31,7 +31,7 @@ public class StoreController {
 	
 	private final StoreService storeService;
 	
-	// 삭제 예
+	// �궘�젣 �삁
 	@GetMapping("locations")
 	public ResponseEntity<Map<String, List>> getAllStroesLocations() {
 		List<StoreDto> list = storeService.getStores();
@@ -42,7 +42,7 @@ public class StoreController {
 	}
 	
 	 /**
-     * 가게 전체 조회 ( 지도 마커용 ) api
+     * 媛�寃� �쟾泥� 議고쉶 ( 吏��룄 留덉빱�슜 ) api
      * @return ResponseEntity<List<StoreSimpleResponseDto>> 
      */
 	@GetMapping
@@ -53,17 +53,18 @@ public class StoreController {
 	
 	
 	 /**
-     * 특정 가게 간단 조회 ( 지도용 ) api
+     * �듅�젙 媛�寃� 媛꾨떒 議고쉶 ( 吏��룄�슜 ) api
      * @return ResponseEntity<StoreResponseDto> 
      */
 	@GetMapping("/store/{storeId}")
 	public ResponseEntity<StoreResponseDto> getStore(@PathVariable int storeId){
 		StoreResponseDto store = storeService.getStore(storeId);
+		log.info(store);
         return new ResponseEntity<>(store, HttpStatus.OK);
     }
 	
 	/*
-	 * 특정 가게 상세 조회 ( 상세 페이지용 ) api
+	 * �듅�젙 媛�寃� �긽�꽭 議고쉶 ( �긽�꽭 �럹�씠吏��슜 ) api
 	 * @return ResponseEntity<StoreDetailResponseDto>
 	 */
 	@GetMapping("/store/detail/{storeId}")

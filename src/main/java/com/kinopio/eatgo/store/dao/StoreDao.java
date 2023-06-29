@@ -5,6 +5,7 @@ import java.util.List;
 import com.kinopio.eatgo.store.dto.ReviewDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
+import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 
 public interface StoreDao {
@@ -18,4 +19,6 @@ public interface StoreDao {
 	List<ReviewDto> selectReviews();
 	int insertReview(ReviewDto reviewDto);
 	
+	StoreResponseDto selectStore(int storeId);
+
 }

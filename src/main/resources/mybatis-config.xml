@@ -15,12 +15,18 @@
 
   <typeAliases>
       <typeAlias alias="LoginResponseDto" type="com.kinopio.eatgo.user.dto.LoginResponseDto"/>
+    
       <typeAlias alias="StoreDto" type="com.kinopio.eatgo.store.dto.StoreDto"/>
       <typeAlias alias="StoreSimpleResponseDto" type="com.kinopio.eatgo.store.dto.StoreSimpleResponseDto"/>
-      <typeAlias alias="StoreResponseDto" type="com.kinopio.eatgo.store.dto.StoreResponseDto"/>
       <typeAlias alias="StoreDetailResponseDto" type="com.kinopio.eatgo.store.dto.StoreDetailResponseDto"/>
+      <typeAlias alias="StoreResponseDto" type="com.kinopio.eatgo.store.dto.StoreResponseDto"/>
+
+  	  <typeAlias alias="ReviewDto" type="com.kinopio.eatgo.store.dto.ReviewDto"/>
+    
+   	  <typeAlias alias="Tag" type="com.kinopio.eatgo.store.entity.Tag"/>
+   	  <typeAlias alias="OpenInfo" type="com.kinopio.eatgo.store.entity.OpenInfo"/>
       <typeAlias alias="ReviewDto" type="com.kinopio.eatgo.store.dto.ReviewDto"/>
-   
+
   </typeAliases>
   
 </configuration>

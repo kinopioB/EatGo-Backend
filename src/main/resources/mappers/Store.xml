@@ -27,7 +27,22 @@
 		<collection property="menus" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.Menu" select="selectMenusByStoreId"></collection>		
 		<collection property="reviews" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.dto.ReviewDto" select="selectReviewsByStoreId"></collection>		
 	
-			
+	</resultMap>
+  
+  
+  <resultMap id="summaryStoreResult" type="StoreResponseDto">
+		<result column="store_id" property="storeId"></result>
+		<result column="store_name" property="storeName"></result>
+		<result column="address" property="address"></result>
+		<result column="position_x" property="positionX"></result>
+		<result column="position_y" property="positionY"></result>
+		<result column="isopen" property="isOpen"></result>
+		<result column="user_id" property="userId"></result>
+		<result column="user_name" property="userName"></result>
+		<result column="category_id" property="categoryId"></result>
+		<result column="category_name" property="categoryName"></result>
+		<collection property="tags" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.Tag" select="selectTagsByStoreId"></collection>
+		<collection property="openInfos" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.OpenInfo" select="selectOpenInfoByStoreId"></collection>
 	</resultMap>
 	
 	<select id="selectStoreDetailById" parameterType="int" resultMap="StoreDetailMap">
@@ -53,24 +68,33 @@
 		select * from review join "user" on review.user_id = "user".user_id where store_id=#{storeId}
 	</select>
 
-
-	<select id="selectAverageRating" parameterType="int" resultType="float">
-      SELECT AVG(rating) as rating_average FROM review WHERE store_id = #{storeId}
-    </select>
-
-
 	
 	<select id="selectAllStore" resultType="StoreSimpleResponseDto">
 		select * from store join "user" on store.user_id = "user".user_id join category on store.category_id = category.category_id where store_id =#{storeId}
 	</select>
 	
-	<select id="selectReviews" resultType="ReviewDto">
+
+	<select id="selectStore" parameterType="int" resultMap="summaryStoreResult">
+		SELECT *
+		FROM store
+		LEFT JOIN "user"
+		ON store.user_id = "user".user_id
+		LEFT JOIN category
+		ON store.category_id = category.category_id
+		WHERE store.store_id = #{storeId}
+	</select>
+
+	
+	<select id="selectAverageRating" parameterType="int" resultType="int">
+		SELECT AVG(rating) as rating_average FROM review WHERE store_id = #{storeId}
+	</select>
+  
+  <select id="selectReviews" resultType="ReviewDto">
 		SELECT * FROM reviews
 	</select>
 	
 	<insert id="insertReview">
 		INSERT * INTO reviews WHERE store_id = #{storeId} 
 	</insert>
-	
 	
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kinopio.eatgo.store.dto.ReviewDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
+import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,14 @@ public class StoreDaoImpl implements StoreDao{
 	}
 	
 	
+	public List<StoreSimpleResponseDto> selectAllStore() {
+		String statement = "store.selectAllStore";
+		return sqlSession.selectList(statement);
+	}
 	
+	@Override
+	public StoreResponseDto selectStore(int storeId) {
+		String statement = "store.selectStore";
+		return sqlSession.selectOne(statement, storeId);
+  }
 }
