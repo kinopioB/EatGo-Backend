@@ -7,14 +7,13 @@ import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.ReviewDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
+import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 
 public interface StoreService {
 	
 	
-	List<StoreDto> getStores(); // 삭제 예정 
-
 	List<StoreSimpleResponseDto> getAllStores();
 
 	List<ReviewResponseDto> getAllStoreReviews(int storeId);
@@ -23,6 +22,8 @@ public interface StoreService {
 
 	List<StoreSimpleResponseDto> getTagStores(String tagName);
 	
+	Boolean createStore(StoreRequestDto storeRequestDto);
+
 
 	StoreResponseDto getStore(int storeId);
 	
@@ -32,5 +33,6 @@ public interface StoreService {
 	List<ReviewDto> getAllReviews();
 	
 	Boolean createReview(ReviewRequestDto reviewRequestDto);
+
 	
 }

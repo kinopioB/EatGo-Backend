@@ -19,8 +19,8 @@ public class StoreResponseDto {
 	private Integer storeId;
 	private String storeName;
 	private String address;
-	private Integer postionX;
-	private Integer postionY;
+	private Double postionX;
+	private Double postionY;
 	private Integer isOpen;
 	
 	private Integer userId;

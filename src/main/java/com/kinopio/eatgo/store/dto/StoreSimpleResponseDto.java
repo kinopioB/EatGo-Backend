@@ -15,7 +15,7 @@ public class StoreSimpleResponseDto {
 	private String address;
 	private Double positionX;
 	private Double positionY;
-	private Boolean isOpen;
+	private Integer isOpen;
 	
 	private Integer categoryId;
 	private String categoryName;
