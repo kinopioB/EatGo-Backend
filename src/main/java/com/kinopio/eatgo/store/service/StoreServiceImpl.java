@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.kinopio.eatgo.store.dao.StoreDao;
+import com.kinopio.eatgo.store.dto.ReviewDto;
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
@@ -81,10 +82,6 @@ public class StoreServiceImpl implements StoreService {
 		return storeDao.selectReviews();
 	}
 
-	@Override
-	public int createReview(ReviewDto reviewDto) {
-		return storeDao.insertReview(reviewDto);
-	}
 
 	
 }
