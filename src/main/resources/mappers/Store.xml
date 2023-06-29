@@ -5,6 +5,16 @@
 
 <mapper namespace="store">
 
+
+	<select id="selectAllStore" resultType="StoreSimpleResponseDto">
+		select * from store join
+		category on store.category_id = category.category_id
+	</select>
+
+	<select id="selectReviews" resultType="ReviewResponseDto">
+		SELECT * FROM review
+	</select>
+		
 	<resultMap id="StoreDetailMap" type="StoreDetailResponseDto">
 		<result property="storeId" column="store_id"></result>
 		<result property="storeName" column="store_name"></result>
@@ -92,9 +102,44 @@
   <select id="selectReviews" resultType="ReviewDto">
 		SELECT * FROM reviews
 	</select>
-	
-	<insert id="insertReview">
-		INSERT * INTO reviews WHERE store_id = #{storeId} 
+
+	<insert id="insertReview" parameterType="ReviewRequestDto">
+		INSERT INTO
+		review(user_id, store_id, content, rating)
+		VALUES(#{userId},
+		#{storeId}, #{content}, #{rating})
 	</insert>
-	
+
+	<select id="selectStoreReviews" resultType="ReviewResponseDto"
+		parameterType="int">
+		SELECT u.user_name AS userName, r.content AS content,
+		r.created_at AS createdAt, r.rating AS rating
+		FROM review r
+		JOIN "user"
+		u
+		ON r.user_id = u.user_id
+		WHERE store_id = #{storeId}
+	</select>
+
+	<select id="selectCategoryStores"
+		resultType="StoreSimpleResponseDto">
+		SELECT
+		s.position_x, s.position_y, s.store_id,
+		s.isopen,
+		s.store_name, s.category_id, c.category_name
+		FROM store s
+		JOIN category
+		c
+		ON s.category_id = c.category_id
+		WHERE s.category_id = 1
+	</select>
+
+	<select id="selectTagStores" resultType="StoreSimpleResponseDto">
+		SELECT *
+		FROM store s
+		JOIN tag t
+		ON s.store_id = t.store_id
+		WHERE t.tag_name = #{tagName}
+	</select>
+
 </mapper>

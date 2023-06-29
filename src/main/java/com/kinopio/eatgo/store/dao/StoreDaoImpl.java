@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.kinopio.eatgo.store.dto.ReviewRequestDto;
+import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.ReviewDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
@@ -18,9 +20,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Repository
 @RequiredArgsConstructor
-public class StoreDaoImpl implements StoreDao{
+public class StoreDaoImpl implements StoreDao {
 	private final SqlSession sqlSession;
-	 
+
 	@Override
 	public List<StoreDto> selectStores() {
 		String statement = "store.selectStores";
@@ -49,26 +51,42 @@ public class StoreDaoImpl implements StoreDao{
 	
 	
 	@Override
-	public List<ReviewDto> selectReviews() {
-		String statement = "store.selectReviews";
-		return sqlSession.selectList(statement);
+	public int insertReview(ReviewRequestDto reviewRequestDto) throws Exception {
+		String statement = "store.insertReview";
+		return sqlSession.insert(statement, reviewRequestDto);
+	}
+
+
+	@Override
+	public List<ReviewResponseDto> selectStoreReviews(int storeId) {
+		String statement = "store.selectStoreReviews";
+		return sqlSession.selectList(statement, storeId);
 	}
 
 	@Override
-	public int insertReview(ReviewDto reviewDto) {
-		String statement = "store.insertReview";
-		return sqlSession.insert(statement, reviewDto);
+	public List<StoreSimpleResponseDto> selectCategoryStores(int categoryId) {
+		String statement = "store.selectCategoryStores";
+		return sqlSession.selectList(statement, categoryId);
+	}
+
+	@Override
+	public List<StoreSimpleResponseDto> selectTagStores(String tagName) {
+		String statement = "store.selectTagStores";
+		return sqlSession.selectList(statement, tagName);
 	}
 	
-	
-	public List<StoreSimpleResponseDto> selectAllStore() {
-		String statement = "store.selectAllStore";
-		return sqlSession.selectList(statement);
-	}
 	
 	@Override
 	public StoreResponseDto selectStore(int storeId) {
 		String statement = "store.selectStore";
 		return sqlSession.selectOne(statement, storeId);
   }
+
+	@Override
+	public List<ReviewDto> selectReviews() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
