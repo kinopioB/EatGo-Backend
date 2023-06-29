@@ -18,28 +18,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StoreResponseDto {
 
-	// 가게 정보
+	// 媛�寃� �젙蹂�
 	private Integer storeId;
 	private String storeName;
 	private String address;
-	private Integer postionX;
-	private Integer postionY;
+	private Integer positionX;
+	private Integer positionY;
 	private Integer isOpen;
 	
 	private Integer userId;
 	private String userName;
 
-	// 카테고리 정보
+	// 移댄뀒怨좊━ �젙蹂�
 	private Integer categoryId;
 	private String categoryName;
 	
-	// 태그 정보
+	// �깭洹� �젙蹂�
 	private List<Tag> tags;
 	
-	// 영업 정보
+	// �쁺�뾽 �젙蹂�
 	private List<OpenInfo> openInfos;
 	
-	// 리뷰 평점 평균
+	// 由щ럭 �룊�젏 �룊洹�
 	private Integer ratingAverage;
 	
 	

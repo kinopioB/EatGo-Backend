@@ -21,7 +21,7 @@ public class StoreServiceImpl implements StoreService{
 	
 
 	@Override
-	public List<StoreDto> getStores() { // 삭제 예정 
+	public List<StoreDto> getStores() { // �궘�젣 �삁�젙 
 		return null;
 	}
 	
@@ -33,7 +33,7 @@ public class StoreServiceImpl implements StoreService{
 
 	@Override
 	public StoreResponseDto getStore(int storeId) {
-		return null;
+		return storeDao.selectStore(storeId);
 	}
 	
 	@Override
