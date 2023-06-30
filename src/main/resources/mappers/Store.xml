@@ -14,7 +14,7 @@
 		<result property="postionY" column="postion_y"></result>
 		<result property="thumbnail" column="thumbnail"></result>
 		<result property="createdType" column="created_type"></result>
-		<result property="createdAt" column="created"></result>
+		<result property="createdAt" column="created_at"></result>
 		
 		<result property="userId" column="user_id"></result>
 		<result property="userName" column="user_name"></result>
@@ -61,8 +61,8 @@
 	<select id="selectStoreHistoryByStoreId" parameterType="int" resultType="com.kinopio.eatgo.store.entity.StoreHistory">
 		select * from store_history where store_id=#{storeId}
 	</select>
-	<select id="selectMenusByStoreId" parameterType="int" resultType="com.kinopio.eatgo.store.entity.OpenInfo">
-		select * from open_info where store_id=#{storeId}
+	<select id="selectMenusByStoreId" parameterType="int" resultType="com.kinopio.eatgo.store.entity.Menu">
+		select * from menu where store_id=#{storeId}
 	</select>
 	
 	<select id="selectReviewsByStoreId" parameterType="int" resultType="ReviewDto">
@@ -89,8 +89,47 @@
 	<select id="selectAverageRating" parameterType="int" resultType="float">
 		SELECT AVG(rating) as rating_average FROM review WHERE store_id = #{storeId}
 	</select>
-  
-  <select id="selectReviews" resultType="ReviewDto">
+	
+	
+	<insert id="insertStore" parameterType="StoreDto" useGeneratedKeys="true" keyProperty="storeId" keyColumn="store_id">
+		insert into store(store_name, user_id, address, position_x, position_y, isopen, category_id, created_type) values (#{storeName}, #{userId}, #{address}, #{positionX}, #{positionY}, #{isOpen}, #{categoryId}, #{createdType})
+	</insert>
+	
+
+
+	<update id="insertMenus" parameterType="java.util.List">
+	   insert INTO menu(store_id, menu_name, price, amount, thumbnail, isbest) 
+	    <foreach collection="list" item="item" separator="UNION ALL">
+	   	   select #{item.storeId}, #{item.menuName}, #{item.price}, #{item.amount}, #{item.thumbnail}, #{item.isBest} from DUAL
+	  </foreach>
+	</update>
+
+
+	<update id="insertTags" parameterType="java.util.List">
+	   insert INTO tag(store_id, tag_name) 
+	    <foreach collection="list" item="item" separator="UNION ALL">
+	   	   select #{item.storeId}, #{item.tagName} from DUAL
+	  	</foreach>
+	</update>
+
+	<update id="insertOpenInfos" parameterType="java.util.List">
+	   insert INTO open_info(store_id, day, open_time, close_time) 
+	    <foreach collection="list" item="item" separator="UNION ALL">
+	   	   select #{item.storeId}, #{item.day} , #{item.openTime}, #{item.closeTime} from DUAL
+	  </foreach>
+	</update>
+	
+	<insert id="insertStoreHistory" parameterType="StoreHistoryRequestDto">
+		insert into store_history(store_id, address, position_x, position_y) 
+		values (#{storeId}, #{address}, #{positionX}, #{positionY})
+	</insert>
+	
+	
+	<update id="updateStoreStatus" parameterType="StoreStatusRequestDto">
+		update store SET isopen = #{changeStatus}  WHERE store_id = #{storeId}
+	</update>
+
+  	<select id="selectReviews" resultType="ReviewDto">
 		SELECT * FROM reviews
 	</select>
 

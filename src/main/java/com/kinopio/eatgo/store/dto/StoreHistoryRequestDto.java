@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TagRequestDto {
-	
-	private String tagName;
+public class StoreHistoryRequestDto {
 
+	private Integer storeId;
+	private String address;
+	private Double positionX;
+	private Double positionY;
 }

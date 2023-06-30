@@ -2,17 +2,20 @@ package com.kinopio.eatgo.store.dao;
 
 import java.util.List;
 
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
-import com.kinopio.eatgo.store.dto.ReviewDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
+import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
+import com.kinopio.eatgo.store.dto.StoreStatusRequestDto;
+import com.kinopio.eatgo.store.entity.Menu;
+import com.kinopio.eatgo.store.entity.OpenInfo;
+import com.kinopio.eatgo.store.entity.Tag;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -38,8 +41,7 @@ public class StoreDaoImpl implements StoreDao {
 	public StoreDetailResponseDto selectStoreDetailById(Integer storeId) {
 		String statement = "store.selectStoreDetailById";
 		StoreDetailResponseDto result = sqlSession.selectOne(statement, storeId);
-		log.info("result id: {}" , storeId);
-		log.info("result return : {}" ,result);
+	
 		return result;
 	}
 	
@@ -47,6 +49,43 @@ public class StoreDaoImpl implements StoreDao {
 	public Float selectStoreAverageRating(Integer storeId) {
 		String statement = "store.selectAverageRating";
 		return sqlSession.selectOne(statement, storeId);
+	}
+	
+	@Override
+	public StoreDto insertStore(StoreDto storeDto) throws Exception {
+		String statement ="store.insertStore";
+		sqlSession.insert(statement, storeDto);
+		return storeDto;
+	}
+
+	@Override
+	public int insertMenus(List<Menu> menus) throws Exception{
+		String statement ="store.insertMenus";		
+		return sqlSession.update(statement,menus);
+	}
+
+	@Override
+	public int insertTags(List<Tag> tags) throws Exception {
+		String statement ="store.insertTags";		
+		return sqlSession.update(statement,tags);
+	}
+
+	@Override
+	public int insertOpenInfos(List<OpenInfo> openInfos) throws Exception {
+		String statement ="store.insertOpenInfos";		
+		return sqlSession.update(statement,openInfos);
+	}
+
+	@Override
+	public int updateStoreStatus(StoreStatusRequestDto storeStatusRequestDto) {
+		String statement = "store.updateStoreStatus";
+		return sqlSession.update(statement, storeStatusRequestDto);
+	}
+
+	@Override
+	public int insertStoreHistory(StoreHistoryRequestDto storeHistoryRequestDto) {
+		String statement = "store.insertStoreHistory";
+		return sqlSession.insert(statement, storeHistoryRequestDto);
 	}
 	
 	
@@ -81,12 +120,6 @@ public class StoreDaoImpl implements StoreDao {
 		String statement = "store.selectStore";
 		return sqlSession.selectOne(statement, storeId);
   }
-
-	@Override
-	public List<ReviewDto> selectReviews() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	
 }
