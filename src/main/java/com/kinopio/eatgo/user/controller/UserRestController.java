@@ -35,7 +35,6 @@ public class UserRestController {
 		return null;
 	}
 
-	// 마이 페이지 리뷰 불러오기
 	@GetMapping("/{userId}/reviews")
 	public ResponseEntity<List<ReviewResponseDto>> getAllReviews(@PathVariable int userId) {
 

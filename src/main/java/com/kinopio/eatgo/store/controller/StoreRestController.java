@@ -36,19 +36,16 @@ public class StoreRestController {
 	private final StoreService storeService;
 
 	/**
-	 * 전체 가게 간단 조회 (마커용) api
 	 * @return ResponseEntity<List<StoreSimpleResponseDto>>
 	 */
 	@GetMapping
 	public ResponseEntity<List<StoreSimpleResponseDto>> getAllStores() {
-
 		List<StoreSimpleResponseDto> stores = storeService.getAllStores();
 		return new ResponseEntity<List<StoreSimpleResponseDto>>(stores, HttpStatus.OK);
 
 	}
 
 	/**
-	 * 특정 가게 간단 조회 api
 	 * @param storeId
 	 * @return  ResponseEntity<StoreResponseDto> 
 	 */
@@ -60,7 +57,6 @@ public class StoreRestController {
 	}
 
 	/**
-	 * 특정 가게 상세 조회 api
 	 * @param storeId
 	 * @return ResponseEntity<StoreDetailResponseDto>
 	 */
@@ -81,7 +77,6 @@ public class StoreRestController {
 	 
 	}
 	
-	// 스토어 리뷰 불러오기
 	@GetMapping("/{storeId}/reviews")
 	public ResponseEntity<List<ReviewResponseDto>> getAllStoreReviews(@PathVariable int storeId) {
 
@@ -89,7 +84,6 @@ public class StoreRestController {
 		return new ResponseEntity<List<ReviewResponseDto>>(storeReviewResult, HttpStatus.OK);
 	}
 
-	// 리뷰 등록하기
 	@PostMapping("/{storeId}/reviews/{userId}")
 	public ResponseEntity<Boolean> createReview(@PathVariable int userId, @PathVariable int storeId,
 			@RequestBody ReviewRequestDto reviewRequestDto) {
@@ -104,18 +98,15 @@ public class StoreRestController {
 		return new ResponseEntity<Boolean>(false, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	// 카테고리 검색
 	@GetMapping("/categories/{categoryId}")
 	public ResponseEntity<List<StoreSimpleResponseDto>> getCategoryStores(@PathVariable int categoryId) {
 		List<StoreSimpleResponseDto> categoryStore = storeService.getCategoryStores(categoryId);
 		return new ResponseEntity<List<StoreSimpleResponseDto>>(categoryStore, HttpStatus.OK);
 	}
 
-	// 태그 검색
 	@GetMapping("/tag/{tagName}")
 	public ResponseEntity<List<StoreSimpleResponseDto>> getTagStores(@PathVariable String tagName) {
 
-		log.info("태그 이름 {}", tagName);
 		List<StoreSimpleResponseDto> tagStore = storeService.getTagStores(tagName);
 		return new ResponseEntity<List<StoreSimpleResponseDto>>(tagStore, HttpStatus.OK);
 	}
