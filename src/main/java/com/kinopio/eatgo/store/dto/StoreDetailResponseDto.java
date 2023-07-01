@@ -10,11 +10,13 @@ import com.kinopio.eatgo.store.entity.StoreHistory;
 import com.kinopio.eatgo.store.entity.Tag;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 @Data 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class StoreDetailResponseDto {

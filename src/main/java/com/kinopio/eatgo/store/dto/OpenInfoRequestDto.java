@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OpenInfoRequestDto {
 
-	private Integer storeId;
 	private String day;
 	private String openTime;
 	private String closeTime;
