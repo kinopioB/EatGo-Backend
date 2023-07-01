@@ -13,14 +13,19 @@
   </settings>
 
   <typeAliases>
+    
       <typeAlias alias="LoginResponseDto" type="com.kinopio.eatgo.user.dto.LoginResponseDto"/>
+      <typeAlias alias="LoginRequestDto" type="com.kinopio.eatgo.user.dto.LoginRequestDto"/>
     
       <typeAlias alias="StoreDto" type="com.kinopio.eatgo.store.dto.StoreDto"/>
       <typeAlias alias="StoreSimpleResponseDto" type="com.kinopio.eatgo.store.dto.StoreSimpleResponseDto"/>
+      <typeAlias alias="Menu" type="com.kinopio.eatgo.store.entity.Menu"/>
      
       <typeAlias alias="StoreDetailResponseDto" type="com.kinopio.eatgo.store.dto.StoreDetailResponseDto"/>
       <typeAlias alias="StoreResponseDto" type="com.kinopio.eatgo.store.dto.StoreResponseDto"/>
 
+      <typeAlias alias="StoreStatusRequestDto" type="com.kinopio.eatgo.store.dto.StoreStatusRequestDto"/>
+      <typeAlias alias="StoreHistoryRequestDto" type="com.kinopio.eatgo.store.dto.StoreHistoryRequestDto"/>
     
    	  <typeAlias alias="Tag" type="com.kinopio.eatgo.store.entity.Tag"/>
    	  <typeAlias alias="OpenInfo" type="com.kinopio.eatgo.store.entity.OpenInfo"/>

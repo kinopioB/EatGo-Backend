@@ -4,11 +4,15 @@ import java.util.List;
 
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
-import com.kinopio.eatgo.store.dto.ReviewDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
+import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
+import com.kinopio.eatgo.store.dto.StoreStatusRequestDto;
+import com.kinopio.eatgo.store.entity.Menu;
+import com.kinopio.eatgo.store.entity.OpenInfo;
+import com.kinopio.eatgo.store.entity.Tag;
 
 public interface StoreDao {
 	
@@ -20,8 +24,14 @@ public interface StoreDao {
 	StoreDetailResponseDto selectStoreDetailById(Integer storeId);
 	Float selectStoreAverageRating(Integer storeId);
 
+	StoreDto insertStore(StoreDto storeDto) throws Exception;
+	int insertMenus(List<Menu> menus) throws Exception;
+	int insertTags(List<Tag> tags) throws Exception;
+	int insertOpenInfos(List<OpenInfo> openInfos) throws Exception;
+	int updateStoreStatus(StoreStatusRequestDto storeStatusRequestDto);
+	int insertStoreHistory(StoreHistoryRequestDto storeHistoryRequestDto);	
 
-	List<ReviewDto> selectReviews();
+
 	List<ReviewResponseDto> selectStoreReviews(int storeId);
 	int insertReview(ReviewRequestDto reviewDto) throws Exception;
 

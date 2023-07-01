@@ -9,11 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
+import com.kinopio.eatgo.user.dto.LoginRequestDto;
 import com.kinopio.eatgo.user.dto.LoginResponseDto;
 import com.kinopio.eatgo.user.service.UserService;
 
@@ -28,11 +30,10 @@ public class UserRestController {
 
 	private final UserService userService;
 
-	@GetMapping("/test")
-	public ResponseEntity<LoginResponseDto> login() {
-		LoginResponseDto result = userService.getLoginUser();
-		log.info("result {} ", result);
-		return null;
+	@PostMapping("/login")
+	public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+		LoginResponseDto result = userService.getLoginUser(loginRequestDto);
+		return new ResponseEntity<LoginResponseDto>(result, HttpStatus.OK);
 	}
 
 	@GetMapping("/{userId}/reviews")
