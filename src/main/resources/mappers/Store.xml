@@ -11,7 +11,7 @@
 		<result property="storeName" column="store_name"></result>
 		<result property="address" column="address"></result>
 		<result property="positionX" column="position_x"></result>
-		<result property="postionY" column="postion_y"></result>
+		<result property="positionY" column="position_y"></result>
 		<result property="thumbnail" column="thumbnail"></result>
 		<result property="createdType" column="created_type"></result>
 		<result property="createdAt" column="created_at"></result>
@@ -44,6 +44,19 @@
 		<result column="category_name" property="categoryName"></result>
 		<collection property="tags" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.Tag" select="selectTagsByStoreId"></collection>
 		<collection property="openInfos" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.OpenInfo" select="selectOpenInfoByStoreId"></collection>
+	</resultMap>
+	
+	<resultMap id="TodayOpenStoreResult" type="TodayOpenStoreResponseDto">
+		<result column="store_id" property="storeId"></result>
+		<result column="store_name" property="storeName"></result>
+		<result column="thumbnail" property="thumbnail"></result>
+		<result column="info" property="info"></result>
+		<result column="store_name" property="storeName"></result>
+		<result column="category_id" property="categoryId"></result>
+		<result column="category_name" property="categoryName"></result>
+		
+		<collection property="tags" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.Tag" select="selectTagsByStoreId"></collection>
+		
 	</resultMap>
 	
 	<select id="selectStoreDetailById" parameterType="int" resultMap="StoreDetailMap">
@@ -90,6 +103,20 @@
 		SELECT AVG(rating) as rating_average FROM review WHERE store_id = #{storeId}
 	</select>
 	
+	<select id="selectPopularStores" resultType="PopularStoreResponseDto">
+	
+		SELECT s.store_id, s.store_name, s.thumbnail, c.category_id, c.category_name, s.info, COUNT(r.review_id) AS review_count
+		FROM store s
+		JOIN review r ON s.store_id = r.store_id
+		JOIN category c ON s.category_id = c.category_id
+		GROUP BY s.store_id, s.store_name, c.category_id, c.category_name, s.info, s.thumbnail
+		ORDER BY COUNT(r.review_id) DESC
+		FETCH FIRST 10 ROWS ONLY
+	</select>
+	
+	<select id="selectTodayOpenStores" resultMap="TodayOpenStoreResult">
+		select * from store join category on store.category_id = category.category_id order by store_id 
+	</select>
 	
 	<insert id="insertStore" parameterType="StoreDto" useGeneratedKeys="true" keyProperty="storeId" keyColumn="store_id">
 		insert into store(store_name, user_id, address, position_x, position_y, isopen, category_id, created_type) values (#{storeName}, #{userId}, #{address}, #{positionX}, #{positionY}, #{isOpen}, #{categoryId}, #{createdType})
