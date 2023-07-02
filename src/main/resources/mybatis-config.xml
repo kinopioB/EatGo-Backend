@@ -23,6 +23,10 @@
      
       <typeAlias alias="StoreDetailResponseDto" type="com.kinopio.eatgo.store.dto.StoreDetailResponseDto"/>
       <typeAlias alias="StoreResponseDto" type="com.kinopio.eatgo.store.dto.StoreResponseDto"/>
+      <typeAlias alias="PopularStoreResponseDto" type="com.kinopio.eatgo.store.dto.PopularStoreResponseDto"/>
+      <typeAlias alias="TodayOpenStoreResponseDto" type="com.kinopio.eatgo.store.dto.TodayOpenStoreResponseDto"/>
+      
+      
 
       <typeAlias alias="StoreStatusRequestDto" type="com.kinopio.eatgo.store.dto.StoreStatusRequestDto"/>
       <typeAlias alias="StoreHistoryRequestDto" type="com.kinopio.eatgo.store.dto.StoreHistoryRequestDto"/>
