@@ -2,6 +2,7 @@ package com.kinopio.eatgo.store.dao;
 
 import java.util.List;
 
+import com.kinopio.eatgo.store.dto.PopularStoreResponseDto;
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
@@ -10,6 +11,7 @@ import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 import com.kinopio.eatgo.store.dto.StoreStatusRequestDto;
+import com.kinopio.eatgo.store.dto.TodayOpenStoreResponseDto;
 import com.kinopio.eatgo.store.entity.Menu;
 import com.kinopio.eatgo.store.entity.OpenInfo;
 import com.kinopio.eatgo.store.entity.Tag;
@@ -23,6 +25,9 @@ public interface StoreDao {
 	List<StoreSimpleResponseDto> selectTagStores(String tagName);
 	StoreDetailResponseDto selectStoreDetailById(Integer storeId);
 	Float selectStoreAverageRating(Integer storeId);
+	List<PopularStoreResponseDto> selectPopularStores();
+	List<TodayOpenStoreResponseDto> selectTodayOpenStores();
+
 
 	StoreDto insertStore(StoreDto storeDto) throws Exception;
 	int insertMenus(List<Menu> menus) throws Exception;
