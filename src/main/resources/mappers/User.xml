@@ -5,10 +5,10 @@
 
 <mapper namespace="user">
 	<select id="selectUserById"
-		resultType="LoginResponseDto">
+		resultType="LoginRequestDto">
 		SELECT *
 		FROM app_user
-		WHERE id =1
+		WHERE user_social_id = #{userSocialId}
 	</select>
 
 	<select id="selectStoreReviews" resultType="ReviewResponseDto" parameterType="int">
@@ -17,5 +17,8 @@
 		WHERE store_id = #{storeId}
 	</select>
 	
-
+	<insert id="insertUser" parameterType="LoginRequestDto" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
+		INSERT INTO app_user (user_social_id, user_name, login_type, role)
+		VALUES (#{userSocialId}, #{userName}, #{loginType}, #{role})
+	</insert>
 </mapper>

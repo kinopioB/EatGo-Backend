@@ -1,6 +1,7 @@
 package com.kinopio.eatgo.user.dao;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
 
@@ -9,8 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
+import com.kinopio.eatgo.user.dto.LoginRequestDto;
 import com.kinopio.eatgo.user.dto.LoginResponseDto;
 
+@Log4j2
 @Repository
 @RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
@@ -18,16 +21,25 @@ public class UserDaoImpl implements UserDao {
 	private final SqlSession sqlSession;
 
 	@Override
-	public LoginResponseDto selectUserById() {
+	public LoginRequestDto selectUserById(String userSocialId) {
 
 		String statment = "user.selectUserById";
-		return sqlSession.selectOne(statment);
+		return sqlSession.selectOne(statment, userSocialId);
 	}
 
 	@Override
 	public List<ReviewResponseDto> selectStoreReviews(int storeId) {
 		String statement = "user.selectStoreReviews";
 		return sqlSession.selectList(statement, storeId);
+	}
+	
+	@Override
+	public LoginRequestDto insertUser(LoginRequestDto loginRequestDto) {
+		String statement = "user.insertUser";
+		log.info(loginRequestDto);
+		sqlSession.insert(statement, loginRequestDto);
+		log.info("55555555555555555555555555555");
+		return loginRequestDto;
 	}
 
 }
