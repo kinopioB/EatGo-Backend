@@ -47,7 +47,7 @@
 	</resultMap>
 	
 	<select id="selectStoreDetailById" parameterType="int" resultMap="StoreDetailMap">
-		select * from store join "user" on store.user_id = "user".user_id join category on store.category_id = category.category_id where store_id =#{storeId}
+		select * from store join app_user on store.user_id = app_user.user_id join category on store.category_id = category.category_id where store_id =#{storeId}
 	</select>
 	
 	<select id="selectTagsByStoreId" parameterType="int" resultType="com.kinopio.eatgo.store.entity.Tag">
@@ -66,20 +66,20 @@
 	</select>
 	
 	<select id="selectReviewsByStoreId" parameterType="int" resultType="ReviewDto">
-		select * from review join "user" on review.user_id = "user".user_id where store_id=#{storeId} 
+		select * from review join app_user on review.user_id = app_user.user_id where store_id=#{storeId} 
 	</select>
 
 		
 	<select id="selectAllStore" resultType="StoreSimpleResponseDto">
-		select * from store join "user" on store.user_id = "user".user_id join category on store.category_id = category.category_id
+		select * from store join app_user on store.user_id = app_user.user_id join category on store.category_id = category.category_id
 	</select>
 	
 
 	<select id="selectStore" parameterType="int" resultMap="summaryStoreResult">
 		SELECT *
 		FROM store
-		LEFT JOIN "user"
-		ON store.user_id = "user".user_id
+		LEFT JOIN app_user
+		ON store.user_id = app_user.user_id
 		LEFT JOIN category
 		ON store.category_id = category.category_id
 		WHERE store.store_id = #{storeId}
@@ -154,7 +154,7 @@
 		SELECT u.user_name AS userName, r.content AS content,
 		r.created_at AS createdAt, r.rating AS rating
 		FROM review r
-		JOIN "user"
+		JOIN app_user
 		u
 		ON r.user_id = u.user_id
 		WHERE store_id = #{storeId}
