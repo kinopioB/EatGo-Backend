@@ -125,8 +125,17 @@
 	</insert>
 	
 	
-	<update id="updateStoreStatus" parameterType="StoreStatusRequestDto">
-		update store SET isopen = #{changeStatus}  WHERE store_id = #{storeId}
+	<update id="updateStoreOpenStatus" parameterType="StoreHistoryRequestDto">
+		update store SET 
+			isopen = 1,
+			position_x = positionX,
+			position_y = positionY,
+			address = address
+		WHERE store_id = #{storeId}
+	</update>
+	
+	<update id="updateStoreCloseStatus" parameterType="int">
+		update store SET isopen = 0  WHERE store_id = #{storeId}
 	</update>
 
   	<select id="selectReviews" resultType="ReviewDto">
