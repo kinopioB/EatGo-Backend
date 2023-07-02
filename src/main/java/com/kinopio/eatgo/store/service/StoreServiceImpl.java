@@ -162,7 +162,7 @@ public class StoreServiceImpl implements StoreService {
 	public Boolean changeStoreStatusOpen(StoreHistoryRequestDto storeHistoryRequestDto) {
 		// TODO Auto-generated method stub
 		try {
-			if(storeDao.updateStoreStatus(new StoreStatusRequestDto(storeHistoryRequestDto.getStoreId(), 1)) < 1) {
+			if(storeDao.updateStoreOpenStatus(storeHistoryRequestDto) < 1) {
 				throw new Exception("영업 시작 업데이트에 실패하였습니다.");
 			}
 			if(storeDao.insertStoreHistory(storeHistoryRequestDto) < 1) {
@@ -179,7 +179,7 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public Boolean changeStoreStatusClose(int storeId) {
 		try {
-			if(storeDao.updateStoreStatus(new StoreStatusRequestDto(storeId, 0)) < 1) {
+			if(storeDao.updateStoreCloseStatus(storeId) < 1) {
 				throw new Exception("영업 종료 업데이트에 실패하였습니다.");
 			}
 			return true;

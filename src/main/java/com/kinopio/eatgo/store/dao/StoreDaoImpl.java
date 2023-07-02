@@ -77,9 +77,14 @@ public class StoreDaoImpl implements StoreDao {
 	}
 
 	@Override
-	public int updateStoreStatus(StoreStatusRequestDto storeStatusRequestDto) {
-		String statement = "store.updateStoreStatus";
-		return sqlSession.update(statement, storeStatusRequestDto);
+	public int updateStoreOpenStatus(StoreHistoryRequestDto storeHistoryRequestDto) {
+		String statement = "store.updateStoreOpenStatus";
+		return sqlSession.update(statement, storeHistoryRequestDto);
+	}
+	@Override
+	public int updateStoreCloseStatus(int storeId) {
+		String statement = "store.updateStoreCloseStatus";
+		return sqlSession.update(statement, storeId);
 	}
 
 	@Override

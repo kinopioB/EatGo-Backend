@@ -28,7 +28,8 @@ public interface StoreDao {
 	int insertMenus(List<Menu> menus) throws Exception;
 	int insertTags(List<Tag> tags) throws Exception;
 	int insertOpenInfos(List<OpenInfo> openInfos) throws Exception;
-	int updateStoreStatus(StoreStatusRequestDto storeStatusRequestDto);
+	int updateStoreOpenStatus(StoreHistoryRequestDto StoreHistoryRequestDto);
+	int updateStoreCloseStatus(int storeId);
 	int insertStoreHistory(StoreHistoryRequestDto storeHistoryRequestDto);	
 
 
