@@ -29,9 +29,11 @@ public class UserServiceImpl implements UserService{
 	public LoginResponseDto getLoginUser(LoginRequestDto loginRequestDto) {
 		JwtUtil jwtUtil = new JwtUtil();
 		LoginRequestDto temp = userDao.selectUserById(loginRequestDto.getUserSocialId());
-		
+		log.info(temp);
 		if (temp == null) {
+			log.info("123123123123");
 			temp = userDao.insertUser(loginRequestDto);
+			log.info("9999999999999" + temp);
 		}
 		String jwt = "";
 		

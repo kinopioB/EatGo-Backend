@@ -7,7 +7,7 @@
 	<select id="selectUserById"
 		resultType="LoginRequestDto">
 		SELECT *
-		FROM "user"
+		FROM app_user
 		WHERE user_social_id = #{userSocialId}
 	</select>
 
@@ -18,9 +18,7 @@
 	</select>
 	
 	<insert id="insertUser" parameterType="LoginRequestDto" useGeneratedKeys="true" keyProperty="userId" keyColumn="user_id">
-		INSERT INTO "user" (user_social_id, user_name, login_type, role) 
+		INSERT INTO app_user (user_social_id, user_name, login_type, role)
 		VALUES (#{userSocialId}, #{userName}, #{loginType}, #{role})
 	</insert>
-	
-
 </mapper>
