@@ -230,5 +230,9 @@
 		ON s.user_id = u.user_id
 		WHERE s.store_id = ${storeId}
 	</select>
+	
+	<select id="selectReviewCounting" parameterType="int" resultType="int">
+		SELECT COUNT(review_id) as reviewNum FROM review WHERE store_id = #{storeId}
+	</select>
 
 </mapper>

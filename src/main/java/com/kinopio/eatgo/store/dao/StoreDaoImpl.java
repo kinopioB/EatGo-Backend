@@ -147,5 +147,12 @@ public class StoreDaoImpl implements StoreDao {
 		String statement = "store.selectStoreMypage";
 		return sqlSession.selectOne(statement, storeId);
 	}
+
+	@Override
+	public Integer selectReviewCount(int storeId) {
+		String statement = "store.selectReviewCounting";
+		return sqlSession.selectOne(statement, storeId);
+	}
+	
 	
 }

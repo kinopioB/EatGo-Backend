@@ -42,6 +42,7 @@ public interface StoreDao {
 	List<ReviewResponseDto> selectStoreReviews(int storeId);
 	int insertReview(ReviewRequestDto reviewDto) throws Exception;
 	StoreMyPageResponseDto selectStoreMyPage(int storeId);
+	Integer selectReviewCount(int storeId);
 
 
 }

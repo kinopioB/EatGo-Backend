@@ -195,6 +195,7 @@ public class StoreServiceImpl implements StoreService {
 	public StoreMyPageResponseDto getStoreMyPage(int storeId) {
 		StoreMyPageResponseDto storeMyPageResponseDto = storeDao.selectStoreMyPage(storeId);
 		storeMyPageResponseDto.setRatingAverage(storeDao.selectStoreAverageRating(storeId));
+		storeMyPageResponseDto.setReviewNum(storeDao.selectReviewCount(storeId));
 		log.info("service : {}", storeMyPageResponseDto);
 		
 		return storeMyPageResponseDto;

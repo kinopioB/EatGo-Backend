@@ -20,10 +20,13 @@ public class StoreMyPageResponseDto {
 	private Integer categoryId;
 	private String categoryName;
 	private Integer isOpen;
+	private Integer reviewNum;
 
 	private Float ratingAverage;
 
 	private List<Tag> tags;
 	private List<ReviewDto> reviews;
+	
+
 
 }
