@@ -38,6 +38,7 @@
       <typeAlias alias="ReviewResponseDto" type="com.kinopio.eatgo.store.dto.ReviewResponseDto"/>
       <typeAlias alias="ReviewRequestDto" type="com.kinopio.eatgo.store.dto.ReviewRequestDto"/>
 	  <typeAlias alias="StoreMyPageResponseDto" type="com.kinopio.eatgo.store.dto.StoreMyPageResponseDto"/>
+	  <typeAlias alias="StoreModificationResponseDto" type="com.kinopio.eatgo.store.dto.StoreModificationResponseDto"/>
 
   </typeAliases>
   

@@ -15,6 +15,7 @@ import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
 import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
+import com.kinopio.eatgo.store.dto.StoreModificationResponseDto;
 import com.kinopio.eatgo.store.dto.StoreMyPageResponseDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
@@ -201,6 +202,13 @@ public class StoreServiceImpl implements StoreService {
 		return storeMyPageResponseDto;
 		
 	}
+
+	@Override
+	public StoreModificationResponseDto getModificationStoreMyPage(int storeId) {
+		return storeDao.selectStoreModificationMyPage(storeId);
+	}
+	
+	
 	
 
 }

@@ -17,6 +17,7 @@ import com.kinopio.eatgo.store.dto.ApiResult;
 import com.kinopio.eatgo.store.dto.PopularStoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
+import com.kinopio.eatgo.store.dto.StoreModificationResponseDto;
 import com.kinopio.eatgo.store.dto.StoreMyPageResponseDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
@@ -198,12 +199,29 @@ public class StoreRestController {
 		
 	}
 	
+	
+	/**
+	 * 마이페이지 (가게) 조회
+	 * @return ResponseEntity<List<TodayOpenStoreResponseDto>> 
+	 */
 	@GetMapping("mypage/{storeId}")
 	public ResponseEntity<StoreMyPageResponseDto> getStoreMyPage(@PathVariable int storeId){
 		
 		StoreMyPageResponseDto storeMyPage = storeService.getStoreMyPage(storeId);
 		
 		return new ResponseEntity<StoreMyPageResponseDto>(storeMyPage, HttpStatus.OK);
+	}
+	
+	/**
+	 * 마이페이지 (가게) 수정 페이지에 보여줄 데이터 조회
+	 * @return ResponseEntity<List<TodayOpenStoreResponseDto>> 
+	 */
+	@GetMapping("mypage/modification/{storeId}")
+	public ResponseEntity<StoreModificationResponseDto> getModificationStoreMyPage(@PathVariable int storeId){
+		
+		StoreModificationResponseDto storeMyPage = storeService.getModificationStoreMyPage(storeId);
+		log.info("storeMypage : {}", storeMyPage);
+		return new ResponseEntity<StoreModificationResponseDto>(storeMyPage, HttpStatus.OK);
 	}
 	
 	
