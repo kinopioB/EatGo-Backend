@@ -15,7 +15,6 @@ import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
 import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
-import com.kinopio.eatgo.store.dto.StoreMyPageResponseDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
@@ -201,18 +200,6 @@ public class StoreServiceImpl implements StoreService {
 	public List<TodayOpenStoreResponseDto> getTodayOpenStores() {
 		return storeDao.selectTodayOpenStores();
 	}
-
-	@Override
-	public StoreMyPageResponseDto getStoreMyPage(int storeId) {
-		StoreMyPageResponseDto storeMyPageResponseDto = storeDao.selectStoreMyPage(storeId);
-		storeMyPageResponseDto.setRatingAverage(storeDao.selectStoreAverageRating(storeId));
-		log.info("service : {}", storeMyPageResponseDto);
-		
-		return storeMyPageResponseDto;
-		
-	}
-	
-	
 
 
 }

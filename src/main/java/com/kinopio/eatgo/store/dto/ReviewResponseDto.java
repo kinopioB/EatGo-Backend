@@ -14,7 +14,6 @@ public class ReviewResponseDto {
 	
 	private Integer userId;
 	private Integer storeId;
-	private Integer storeName;
 	private String content;
 	private String userName;
 	private Integer rating;
