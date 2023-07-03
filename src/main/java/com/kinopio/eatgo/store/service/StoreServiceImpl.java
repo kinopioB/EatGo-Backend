@@ -15,6 +15,7 @@ import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
 import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
+import com.kinopio.eatgo.store.dto.StoreMyPageResponseDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
@@ -79,7 +80,6 @@ public class StoreServiceImpl implements StoreService {
 		return storeDetail;
 	}
 
-
 	@Transactional
 	@Override
 	public StoreDetailResponseDto createStore(StoreRequestDto storeRequestDto) {
@@ -135,24 +135,14 @@ public class StoreServiceImpl implements StoreService {
 
 //			// 리턴할 정보 -> 추후 논의 후 변경 
 			StoreDetailResponseDto storeDetailResponseDto = StoreDetailResponseDto.builder()
-															.storeId(storeDto.getStoreId())
-															.storeName(storeDto.getStoreName())
-															.address(storeDto.getAddress())
-															.positionX(storeDto.getPositionX())
-															.positionY(storeDto.getPositionY())
-															.isOpen(0)
-															.createdType(storeDto.getCreatedType())
-															.createdAt(storeDto.getCreatedAt())
-															.userId(storeDto.getUserId())
-															.categoryId(storeDto.getCategoryId())
-															.tags(tags)
-															.menus(menus)
-															.openInfos(openInfos)
-															.build();
-			
+					.storeId(storeDto.getStoreId()).storeName(storeDto.getStoreName()).address(storeDto.getAddress())
+					.positionX(storeDto.getPositionX()).positionY(storeDto.getPositionY()).isOpen(0)
+					.createdType(storeDto.getCreatedType()).createdAt(storeDto.getCreatedAt())
+					.userId(storeDto.getUserId()).categoryId(storeDto.getCategoryId()).tags(tags).menus(menus)
+					.openInfos(openInfos).build();
+
 			return storeDetailResponseDto;
 
-			
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return null;
@@ -163,10 +153,10 @@ public class StoreServiceImpl implements StoreService {
 	public Boolean changeStoreStatusOpen(StoreHistoryRequestDto storeHistoryRequestDto) {
 		// TODO Auto-generated method stub
 		try {
-			if(storeDao.updateStoreOpenStatus(storeHistoryRequestDto) < 1) {
+			if (storeDao.updateStoreOpenStatus(storeHistoryRequestDto) < 1) {
 				throw new Exception("영업 시작 업데이트에 실패하였습니다.");
 			}
-			if(storeDao.insertStoreHistory(storeHistoryRequestDto) < 1) {
+			if (storeDao.insertStoreHistory(storeHistoryRequestDto) < 1) {
 				throw new Exception("영업 정보 이력 등록에 실패하였습니다.");
 			}
 			return true;
@@ -180,7 +170,7 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public Boolean changeStoreStatusClose(int storeId) {
 		try {
-			if(storeDao.updateStoreCloseStatus(storeId) < 1) {
+			if (storeDao.updateStoreCloseStatus(storeId) < 1) {
 				throw new Exception("영업 종료 업데이트에 실패하였습니다.");
 			}
 			return true;
@@ -201,5 +191,15 @@ public class StoreServiceImpl implements StoreService {
 		return storeDao.selectTodayOpenStores();
 	}
 
+	@Override
+	public StoreMyPageResponseDto getStoreMyPage(int storeId) {
+		StoreMyPageResponseDto storeMyPageResponseDto = storeDao.selectStoreMyPage(storeId);
+		storeMyPageResponseDto.setRatingAverage(storeDao.selectStoreAverageRating(storeId));
+		log.info("service : {}", storeMyPageResponseDto);
+		
+		return storeMyPageResponseDto;
+		
+	}
+	
 
 }

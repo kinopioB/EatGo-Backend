@@ -7,6 +7,7 @@ import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
+import com.kinopio.eatgo.store.dto.StoreMyPageResponseDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
@@ -42,6 +43,6 @@ public interface StoreService {
 
 	Boolean createReview(ReviewRequestDto reviewRequestDto);
 	
-
+	StoreMyPageResponseDto getStoreMyPage(int storeId);
 	
 }
