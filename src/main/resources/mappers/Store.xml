@@ -59,6 +59,19 @@
 		
 	</resultMap>
 	
+	<resultMap id="MyPageStoreResult" type="StoreMyPageResponseDto">
+		<result column="store_id" property="storeId"></result>
+		<result column="store_name" property="storeName"></result>
+		<result column="user_name" property="userName"></result>
+		<result column="thumbnail" property="thumbnail"></result>
+		<result column="category_id" property="categoryId"></result>
+		<result column="category_name" property="categoryName"></result>
+		<result column="isOpen" property="isOpen"></result>
+		
+		<collection property="tags" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.Tag" select="selectTagsByStoreId"></collection>
+		<collection property="reviews" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.dto.ReviewDto" select="selectReviewsByStoreId"></collection>		
+	</resultMap>
+	
 	<select id="selectStoreDetailById" parameterType="int" resultMap="StoreDetailMap">
 		select * from store join app_user on store.user_id = app_user.user_id join category on store.category_id = category.category_id where store_id =#{storeId}
 	</select>
@@ -206,6 +219,16 @@
 		JOIN tag t
 		ON s.store_id = t.store_id
 		WHERE t.tag_name = #{tagName}
+	</select>
+	
+	<select id="selectStoreMypage" resultMap="MyPageStoreResult" parameterType="int">
+		SELECT store_name, thumbNail, isopen, c.category_id, category_name, user_name, s.store_id
+		FROM store s
+		JOIN category c
+		ON s.category_id = c.category_id 
+		JOIN app_user u
+		ON s.user_id = u.user_id
+		WHERE s.store_id = ${storeId}
 	</select>
 
 </mapper>

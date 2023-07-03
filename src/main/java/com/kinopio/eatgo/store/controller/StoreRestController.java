@@ -17,6 +17,7 @@ import com.kinopio.eatgo.store.dto.ApiResult;
 import com.kinopio.eatgo.store.dto.PopularStoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
+import com.kinopio.eatgo.store.dto.StoreMyPageResponseDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
@@ -197,6 +198,14 @@ public class StoreRestController {
 		
 	}
 	
+	
+	@GetMapping("mypage/{storeId}")
+	public ResponseEntity<StoreMyPageResponseDto> getStoreMyPage(@PathVariable int storeId){
+		
+		StoreMyPageResponseDto storeMyPage = storeService.getStoreMyPage(storeId);
+		
+		return new ResponseEntity<StoreMyPageResponseDto>(storeMyPage, HttpStatus.OK);
+	}
 	
 	
 	
