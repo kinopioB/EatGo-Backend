@@ -46,6 +46,19 @@
 		<collection property="openInfos" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.OpenInfo" select="selectOpenInfoByStoreId"></collection>
 	</resultMap>
 	
+	<resultMap id="MyPageStoreResult" type="StoreMyPageResponseDto">
+		<result column="store_id" property="storeId"></result>
+		<result column="store_name" property="storeName"></result>
+		<result column="user_name" property="userName"></result>
+		<result column="thumbnail" property="thumbnail"></result>
+		<result column="category_id" property="categoryId"></result>
+		<result column="category_name" property="categoryName"></result>
+		<result column="isOpen" property="isOpen"></result>
+		
+		<collection property="tags" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.Tag" select="selectTagsByStoreId"></collection>
+		<collection property="reviews" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.dto.ReviewDto" select="selectReviewsByStoreId"></collection>		
+	</resultMap>
+	
 	<resultMap id="TodayOpenStoreResult" type="TodayOpenStoreResponseDto">
 		<result column="store_id" property="storeId"></result>
 		<result column="store_name" property="storeName"></result>
@@ -57,6 +70,16 @@
 		
 		<collection property="tags" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.Tag" select="selectTagsByStoreId"></collection>
 		
+	</resultMap>
+	
+	<resultMap id="ModificationStoreResult" type="StoreModificationResponseDto">
+		<result column="store_id" property="storeId"></result>
+		<result column="store_name" property="storeName"></result>
+		<result column="address" property="address"></result>
+		<result column="position_x" property="positionX"></result>
+		<result column="position_y" property="positionY"></result>
+		<result column="isopen" property="isOpen"></result>
+		<collection property="openInfos" column="store_id" javaType="java.util.List" ofType="com.kinopio.eatgo.store.entity.OpenInfo" select="selectOpenInfosForModification"></collection>
 	</resultMap>
 	
 	<select id="selectStoreDetailById" parameterType="int" resultMap="StoreDetailMap">
@@ -208,6 +231,31 @@
 		WHERE t.tag_name = #{tagName}
 	</select>
 	
+	<select id="selectStoreMypage" resultMap="MyPageStoreResult" parameterType="int">
+		SELECT store_name, thumbNail, isopen, c.category_id, category_name, user_name, s.store_id
+		FROM store s
+		JOIN category c
+		ON s.category_id = c.category_id 
+		JOIN app_user u
+		ON s.user_id = u.user_id
+		WHERE s.store_id = ${storeId}
+	</select>
+	
+	<select id="selectReviewCounting" parameterType="int" resultType="int">
+		SELECT COUNT(review_id) as reviewNum FROM review WHERE store_id = #{storeId}
+	</select>
+	
+	<select id="selectStoreModificationMyPage" parameterType="int" resultMap="ModificationStoreResult">
+		SELECT store_id, store_name, address, position_x, position_y, created_type
+		FROM store WHERE store_id = ${store_id}
+	</select>
+	
+	<select id="selectOpenInfosForModification" parameterType="int" resultType="OpenInfo">
+	   SELECT *
+	   FROM open_info
+	   WHERE store_id = #{storeID} 
+	</select>
+  
 	<select id="selectFilterStores" parameterType="String" resultType="StoreSimpleResponseDto">
 		select * from (
 		    select s.store_id ab, listagg(tag_name, '') within group(order by tag_name) as tn
