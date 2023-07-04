@@ -22,6 +22,7 @@ import com.kinopio.eatgo.store.dto.StoreMyPageResponseDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
+import com.kinopio.eatgo.store.dto.StoreSummaryResponseDto;
 import com.kinopio.eatgo.store.dto.TodayOpenStoreResponseDto;
 import com.kinopio.eatgo.store.service.StoreService;
 
@@ -43,8 +44,13 @@ public class StoreRestController {
 	 */
 	@GetMapping
 	public ResponseEntity<List<StoreSimpleResponseDto>> getAllStores() {
-
 		List<StoreSimpleResponseDto> stores = storeService.getAllStores();
+		return new ResponseEntity<List<StoreSimpleResponseDto>>(stores, HttpStatus.OK);
+	}
+	
+	@GetMapping("/search/{searchFilter}")
+	public ResponseEntity<List<StoreSimpleResponseDto>> getAllStores(@PathVariable String searchFilter) {	
+		List<StoreSimpleResponseDto> stores = storeService.getFilterStores(searchFilter);
 		return new ResponseEntity<List<StoreSimpleResponseDto>>(stores, HttpStatus.OK);
 	}
 
@@ -197,8 +203,7 @@ public class StoreRestController {
 		log.info("todayOpenStores Response {} ", todayOpenStores);
 		return new ResponseEntity<List<TodayOpenStoreResponseDto>>(todayOpenStores, HttpStatus.OK);
 		
-	}
-	
+	}	
 	
 	/**
 	 * 마이페이지 (가게) 조회
@@ -225,12 +230,4 @@ public class StoreRestController {
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-
 }
