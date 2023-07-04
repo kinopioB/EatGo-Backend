@@ -15,6 +15,8 @@ import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
 import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
+import com.kinopio.eatgo.store.dto.StoreModificationResponseDto;
+import com.kinopio.eatgo.store.dto.StoreMyPageResponseDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
@@ -156,37 +158,16 @@ public class StoreServiceImpl implements StoreService {
 			}
 	
 
-			StoreHistoryRequestDto stroeHistroyRequestDto = StoreHistoryRequestDto.builder()
-															.storeId(storeDto.getStoreId())
-															.address(storeDto.getAddress())
-															.positionX(storeDto.getPositionX())
-															.positionY(storeDto.getPositionY())
-															.build();
-			// 영업 이력 하나 넣기 
-			storeDao.insertStoreHistory(stroeHistroyRequestDto);
-			
-			
-			
 //			// 리턴할 정보 -> 추후 논의 후 변경 
-//			StoreDetailResponseDto storeDetailResponseDto = StoreDetailResponseDto.builder()
-//															.storeId(storeDto.getStoreId())
-//															.storeName(storeDto.getStoreName())
-//															.address(storeDto.getAddress())
-//															.positionX(storeDto.getPositionX())
-//															.positionY(storeDto.getPositionY())
-//															.isOpen(0)
-//															.createdType(storeDto.getCreatedType())
-//															.createdAt(storeDto.getCreatedAt())
-//															.userId(storeDto.getUserId())
-//															.categoryId(storeDto.getCategoryId())
-//															.tags(tags)
-//															.menus(menus)
-//															.openInfos(openInfos)
-//															.build();
-			
-			return storeDto.getStoreId();
+			StoreDetailResponseDto storeDetailResponseDto = StoreDetailResponseDto.builder()
+					.storeId(storeDto.getStoreId()).storeName(storeDto.getStoreName()).address(storeDto.getAddress())
+					.positionX(storeDto.getPositionX()).positionY(storeDto.getPositionY()).isOpen(0)
+					.createdType(storeDto.getCreatedType()).createdAt(storeDto.getCreatedAt())
+					.userId(storeDto.getUserId()).categoryId(storeDto.getCategoryId()).tags(tags).menus(menus)
+					.openInfos(openInfos).build();
 
-			
+			return storeDetailResponseDto;
+
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return -1;
@@ -240,4 +221,21 @@ public class StoreServiceImpl implements StoreService {
 		return storeDao.selectTodayOpenStores();
 	}
 
+	@Override
+	public StoreMyPageResponseDto getStoreMyPage(int storeId) {
+		StoreMyPageResponseDto storeMyPageResponseDto = storeDao.selectStoreMyPage(storeId);
+		storeMyPageResponseDto.setRatingAverage(storeDao.selectStoreAverageRating(storeId));
+		storeMyPageResponseDto.setReviewNum(storeDao.selectReviewCount(storeId));
+		log.info("service : {}", storeMyPageResponseDto);
+		
+		return storeMyPageResponseDto;
+		
+	}
+
+	@Override
+	public StoreModificationResponseDto getModificationStoreMyPage(int storeId) {
+		return storeDao.selectStoreModificationMyPage(storeId);
+	}
+	
+	
 }
