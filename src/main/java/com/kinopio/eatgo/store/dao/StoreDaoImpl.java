@@ -14,6 +14,7 @@ import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 import com.kinopio.eatgo.store.dto.StoreStatusRequestDto;
+import com.kinopio.eatgo.store.dto.StoreSummaryResponseDto;
 import com.kinopio.eatgo.store.dto.TodayOpenStoreResponseDto;
 import com.kinopio.eatgo.store.entity.Menu;
 import com.kinopio.eatgo.store.entity.OpenInfo;
@@ -129,6 +130,12 @@ public class StoreDaoImpl implements StoreDao {
   }
 
 	@Override
+	public List<StoreSimpleResponseDto> selectFilterStore(String searchFilter) {
+		String statement = "store.selectFilterStores";
+		return sqlSession.selectList(statement, searchFilter);
+	}	
+
+	@Override
 	public List<PopularStoreResponseDto> selectPopularStores() {
 		String statement = "store.selectPopularStores";
 		return sqlSession.selectList(statement);
@@ -139,6 +146,4 @@ public class StoreDaoImpl implements StoreDao {
 		String statement = "store.selectTodayOpenStores";
 		return sqlSession.selectList(statement);
 	}
-
-	
 }
