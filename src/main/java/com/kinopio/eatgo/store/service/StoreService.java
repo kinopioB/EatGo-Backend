@@ -9,6 +9,7 @@ import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
+import com.kinopio.eatgo.store.dto.StoreSummaryResponseDto;
 
 public interface StoreService {
 	
@@ -34,7 +35,7 @@ public interface StoreService {
 	List<ReviewResponseDto> getAllStoreReviews(int storeId);
 
 	Boolean createReview(ReviewRequestDto reviewRequestDto);
-
-
+	
+	List<StoreSimpleResponseDto> getFilterStores(String searchFilter);
 	
 }

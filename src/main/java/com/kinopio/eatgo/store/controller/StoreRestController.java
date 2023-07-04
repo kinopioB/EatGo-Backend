@@ -19,6 +19,7 @@ import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
+import com.kinopio.eatgo.store.dto.StoreSummaryResponseDto;
 import com.kinopio.eatgo.store.service.StoreService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,13 @@ public class StoreRestController {
 	 */
 	@GetMapping
 	public ResponseEntity<List<StoreSimpleResponseDto>> getAllStores() {
-
 		List<StoreSimpleResponseDto> stores = storeService.getAllStores();
+		return new ResponseEntity<List<StoreSimpleResponseDto>>(stores, HttpStatus.OK);
+	}
+	
+	@GetMapping("/search/{searchFilter}")
+	public ResponseEntity<List<StoreSimpleResponseDto>> getAllStores(@PathVariable String searchFilter) {	
+		List<StoreSimpleResponseDto> stores = storeService.getFilterStores(searchFilter);
 		return new ResponseEntity<List<StoreSimpleResponseDto>>(stores, HttpStatus.OK);
 	}
 
@@ -179,5 +185,4 @@ public class StoreRestController {
 		List<StoreSimpleResponseDto> tagStore = storeService.getTagStores(tagName);
 		return new ResponseEntity<List<StoreSimpleResponseDto>>(tagStore, HttpStatus.OK);
 	}
-
 }

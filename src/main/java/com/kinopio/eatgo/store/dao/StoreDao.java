@@ -10,6 +10,7 @@ import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 import com.kinopio.eatgo.store.dto.StoreStatusRequestDto;
+import com.kinopio.eatgo.store.dto.StoreSummaryResponseDto;
 import com.kinopio.eatgo.store.entity.Menu;
 import com.kinopio.eatgo.store.entity.OpenInfo;
 import com.kinopio.eatgo.store.entity.Tag;
@@ -35,6 +36,8 @@ public interface StoreDao {
 
 	List<ReviewResponseDto> selectStoreReviews(int storeId);
 	int insertReview(ReviewRequestDto reviewDto) throws Exception;
-
+	
+	
+	List<StoreSimpleResponseDto> selectFilterStore(String searchFilter);
 
 }
