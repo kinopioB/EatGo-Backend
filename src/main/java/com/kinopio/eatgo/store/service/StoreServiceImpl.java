@@ -19,6 +19,7 @@ import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 import com.kinopio.eatgo.store.dto.StoreStatusRequestDto;
+import com.kinopio.eatgo.store.dto.StoreSummaryResponseDto;
 import com.kinopio.eatgo.store.dto.TagRequestDto;
 import com.kinopio.eatgo.store.dto.TodayOpenStoreResponseDto;
 import com.kinopio.eatgo.store.entity.Menu;
@@ -69,13 +70,23 @@ public class StoreServiceImpl implements StoreService {
 
 	@Override
 	public StoreResponseDto getStore(int storeId) {
-		return storeDao.selectStore(storeId);
+		StoreResponseDto storeSummary = storeDao.selectStore(storeId);
+		storeSummary.setRatingAverage(storeDao.selectStoreAverageRating(storeId));
+		log.info(storeSummary);
+		return storeSummary;
 	}
 
 	@Override
 	public StoreDetailResponseDto getStoreDetail(int storeId) {
 		StoreDetailResponseDto storeDetail = storeDao.selectStoreDetailById(storeId);
-		storeDetail.setRatingAverage(storeDao.selectStoreAverageRating(storeId));
+		Float avg = storeDao.selectStoreAverageRating(storeId);
+		
+		if (avg == null) {
+			avg = 0.0f;
+		}
+		
+		storeDetail.setRatingAverage(avg);
+		
 		return storeDetail;
 	}
 
@@ -212,6 +223,11 @@ public class StoreServiceImpl implements StoreService {
 			log.info(e.getMessage());
 			return false;
 		}
+	}
+
+	@Override
+	public List<StoreSimpleResponseDto> getFilterStores(String searchFilter) {
+		return storeDao.selectFilterStore(searchFilter);
 	}
 
 	@Override
