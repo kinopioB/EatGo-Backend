@@ -2,6 +2,7 @@ package com.kinopio.eatgo.store.service;
 
 import java.util.List;
 
+import com.kinopio.eatgo.store.dto.PopularStoreResponseDto;
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
@@ -10,6 +11,7 @@ import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSummaryResponseDto;
+import com.kinopio.eatgo.store.dto.TodayOpenStoreResponseDto;
 
 public interface StoreService {
 	
@@ -24,7 +26,12 @@ public interface StoreService {
 	List<StoreSimpleResponseDto> getTagStores(String tagName);
 	
 
-	Boolean createStore(StoreRequestDto storeRequestDto);
+	List<PopularStoreResponseDto> getPopularStores();
+	
+	List<TodayOpenStoreResponseDto> getTodayOpenStores();
+
+
+	StoreDetailResponseDto createStore(StoreRequestDto storeRequestDto);
 
 
 	Boolean changeStoreStatusOpen(StoreHistoryRequestDto storeHistoryRequestDto);
@@ -37,5 +44,5 @@ public interface StoreService {
 	Boolean createReview(ReviewRequestDto reviewRequestDto);
 	
 	List<StoreSimpleResponseDto> getFilterStores(String searchFilter);
-	
+
 }

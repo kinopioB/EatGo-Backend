@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.ApiResult;
+import com.kinopio.eatgo.store.dto.PopularStoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSummaryResponseDto;
+import com.kinopio.eatgo.store.dto.TodayOpenStoreResponseDto;
 import com.kinopio.eatgo.store.service.StoreService;
 
 import lombok.RequiredArgsConstructor;
@@ -82,16 +84,8 @@ public class StoreRestController {
 	 * @return ResponseEntity<ApiResult>
 	 */
 	@PostMapping
-	public ResponseEntity<ApiResult> createStore(@RequestBody StoreRequestDto storeRequestDto) {
-
-		if (storeService.createStore(storeRequestDto)) {
-			return new ResponseEntity<ApiResult>(
-					ApiResult.builder().status(ApiResult.STATUS_FAIL).message("가게 등록에 실패하였습니다.").build(),
-					HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		return new ResponseEntity<ApiResult>(
-				ApiResult.builder().status(ApiResult.STATUS_SUCCESS).message("가게 등록에 성공하였습니다.").build(),
-				HttpStatus.CREATED);
+	public ResponseEntity<StoreDetailResponseDto> createStore(@RequestBody StoreRequestDto storeRequestDto) {
+		return new ResponseEntity<StoreDetailResponseDto>(storeService.createStore(storeRequestDto),HttpStatus.CREATED);
 	}
 
 	/**
@@ -164,7 +158,7 @@ public class StoreRestController {
 				HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	/**
+	/** 
 	 * 특정 카테고리 해당 가게들 ( 마커용 ) 조회 api
 	 * @param categoryId
 	 * @return ResponseEntity<List<StoreSimpleResponseDto>> 
@@ -184,5 +178,28 @@ public class StoreRestController {
 	public ResponseEntity<List<StoreSimpleResponseDto>> getTagStores(@PathVariable String tagName) {
 		List<StoreSimpleResponseDto> tagStore = storeService.getTagStores(tagName);
 		return new ResponseEntity<List<StoreSimpleResponseDto>>(tagStore, HttpStatus.OK);
+	}
+	
+	/**
+	 * 리뷰가 많은 가게 top 10 조회 api
+	 * @return  ResponseEntity<List<PopularStoreResponseDto>>
+	 */
+	@GetMapping("/popular")
+	public ResponseEntity<List<PopularStoreResponseDto>> getPopularStores(){
+		List<PopularStoreResponseDto> popularStores = storeService.getPopularStores();
+		log.info("logs{} ", popularStores);
+		return new ResponseEntity<List<PopularStoreResponseDto>>(popularStores, HttpStatus.OK);
+	}
+	
+	/**
+	 * 오늘 오픈한 가게 조회 api
+	 * @return ResponseEntity<List<TodayOpenStoreResponseDto>> 
+	 */
+	@GetMapping("/today-open")
+	public ResponseEntity<List<TodayOpenStoreResponseDto>> getTodayOpenStores(){
+		List<TodayOpenStoreResponseDto> todayOpenStores = storeService.getTodayOpenStores();
+		log.info("todayOpenStores Response {} ", todayOpenStores);
+		return new ResponseEntity<List<TodayOpenStoreResponseDto>>(todayOpenStores, HttpStatus.OK);
+		
 	}
 }

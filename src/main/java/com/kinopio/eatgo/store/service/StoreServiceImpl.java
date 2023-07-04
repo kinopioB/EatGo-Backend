@@ -9,12 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.kinopio.eatgo.store.dao.StoreDao;
 import com.kinopio.eatgo.store.dto.MenuRequestDto;
 import com.kinopio.eatgo.store.dto.OpenInfoRequestDto;
-import com.kinopio.eatgo.store.dto.ReviewDto;
+import com.kinopio.eatgo.store.dto.PopularStoreResponseDto;
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDto;
-import com.kinopio.eatgo.store.dto.StoreDto.StoreDtoBuilder;
 import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
 import com.kinopio.eatgo.store.dto.StoreRequestDto;
 import com.kinopio.eatgo.store.dto.StoreResponseDto;
@@ -22,6 +21,7 @@ import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 import com.kinopio.eatgo.store.dto.StoreStatusRequestDto;
 import com.kinopio.eatgo.store.dto.StoreSummaryResponseDto;
 import com.kinopio.eatgo.store.dto.TagRequestDto;
+import com.kinopio.eatgo.store.dto.TodayOpenStoreResponseDto;
 import com.kinopio.eatgo.store.entity.Menu;
 import com.kinopio.eatgo.store.entity.OpenInfo;
 import com.kinopio.eatgo.store.entity.Tag;
@@ -93,7 +93,7 @@ public class StoreServiceImpl implements StoreService {
 
 	@Transactional
 	@Override
-	public Boolean createStore(StoreRequestDto storeRequestDto) {
+	public StoreDetailResponseDto createStore(StoreRequestDto storeRequestDto) {
 		try {
 
 			StoreDto storeDto = StoreDto.builder().storeName(storeRequestDto.getStoreName())
@@ -145,27 +145,28 @@ public class StoreServiceImpl implements StoreService {
 			}
 
 //			// 리턴할 정보 -> 추후 논의 후 변경 
-//			StoreDetailResponseDto storeDetailResponseDto = StoreDetailResponseDto.builder()
-//															.storeId(storeDto.getStoreId())
-//															.storeName(storeDto.getStoreName())
-//															.address(storeDto.getAddress())
-//															.positionX(storeDto.getPositionX())
-//															.positionY(storeDto.getPositionY())
-//															.isOpen(0)
-//															.createdType(storeDto.getCreatedType())
-//															.createdAt(storeDto.getCreatedAt())
-//															.userId(storeDto.getUserId())
-//															.categoryId(storeDto.getCategoryId())
-//															.tags(tags)
-//															.menus(menus)
-//															.openInfos(openInfos)
-//															.build();
+			StoreDetailResponseDto storeDetailResponseDto = StoreDetailResponseDto.builder()
+															.storeId(storeDto.getStoreId())
+															.storeName(storeDto.getStoreName())
+															.address(storeDto.getAddress())
+															.positionX(storeDto.getPositionX())
+															.positionY(storeDto.getPositionY())
+															.isOpen(0)
+															.createdType(storeDto.getCreatedType())
+															.createdAt(storeDto.getCreatedAt())
+															.userId(storeDto.getUserId())
+															.categoryId(storeDto.getCategoryId())
+															.tags(tags)
+															.menus(menus)
+															.openInfos(openInfos)
+															.build();
+			
+			return storeDetailResponseDto;
 
-			return true;
-
+			
 		} catch (Exception e) {
 			log.info(e.getMessage());
-			return false;
+			return null;
 		}
 	}
 
@@ -200,9 +201,20 @@ public class StoreServiceImpl implements StoreService {
 			return false;
 		}
 	}
-	
+
 	@Override
 	public List<StoreSimpleResponseDto> getFilterStores(String searchFilter) {
 		return storeDao.selectFilterStore(searchFilter);
 	}
+
+	@Override
+	public List<PopularStoreResponseDto> getPopularStores() {
+		return storeDao.selectPopularStores();
+	}
+
+	@Override
+	public List<TodayOpenStoreResponseDto> getTodayOpenStores() {
+		return storeDao.selectTodayOpenStores();
+	}
+
 }

@@ -155,9 +155,9 @@
 	<update id="updateStoreOpenStatus" parameterType="StoreHistoryRequestDto">
 		update store SET 
 			isopen = 1,
-			position_x = positionX,
-			position_y = positionY,
-			address = address
+			position_x = #{positionX},
+			position_y = #{positionY},
+			address = #{address}
 		WHERE store_id = #{storeId}
 	</update>
 	

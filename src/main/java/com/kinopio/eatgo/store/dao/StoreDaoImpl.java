@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.kinopio.eatgo.store.dto.PopularStoreResponseDto;
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
@@ -14,6 +15,7 @@ import com.kinopio.eatgo.store.dto.StoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 import com.kinopio.eatgo.store.dto.StoreStatusRequestDto;
 import com.kinopio.eatgo.store.dto.StoreSummaryResponseDto;
+import com.kinopio.eatgo.store.dto.TodayOpenStoreResponseDto;
 import com.kinopio.eatgo.store.entity.Menu;
 import com.kinopio.eatgo.store.entity.OpenInfo;
 import com.kinopio.eatgo.store.entity.Tag;
@@ -126,9 +128,22 @@ public class StoreDaoImpl implements StoreDao {
 		String statement = "store.selectStore";
 		return sqlSession.selectOne(statement, storeId);
   }
+
 	@Override
 	public List<StoreSimpleResponseDto> selectFilterStore(String searchFilter) {
 		String statement = "store.selectFilterStores";
 		return sqlSession.selectList(statement, searchFilter);
 	}	
+
+	@Override
+	public List<PopularStoreResponseDto> selectPopularStores() {
+		String statement = "store.selectPopularStores";
+		return sqlSession.selectList(statement);
+	}
+
+	@Override
+	public List<TodayOpenStoreResponseDto> selectTodayOpenStores() {
+		String statement = "store.selectTodayOpenStores";
+		return sqlSession.selectList(statement);
+	}
 }
