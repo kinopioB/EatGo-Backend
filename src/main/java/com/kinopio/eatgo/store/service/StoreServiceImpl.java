@@ -166,7 +166,8 @@ public class StoreServiceImpl implements StoreService {
 					.userId(storeDto.getUserId()).categoryId(storeDto.getCategoryId()).tags(tags).menus(menus)
 					.openInfos(openInfos).build();
 
-			return storeDetailResponseDto;
+			return storeDto.getStoreId();
+			
 
 		} catch (Exception e) {
 			log.info(e.getMessage());
