@@ -17,6 +17,7 @@ public class Menu {
 	private Integer price;
 	private Integer amount;
 	private String thumbnail;
+	private String info;
 	private Integer isBest;
 	
 }

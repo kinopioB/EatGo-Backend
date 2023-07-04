@@ -79,10 +79,9 @@ public class StoreServiceImpl implements StoreService {
 		return storeDetail;
 	}
 
-
 	@Transactional
 	@Override
-	public StoreDetailResponseDto createStore(StoreRequestDto storeRequestDto) {
+	public Integer createStore(StoreRequestDto storeRequestDto) {
 		try {
 
 			StoreDto storeDto = StoreDto.builder().storeName(storeRequestDto.getStoreName())
@@ -94,7 +93,7 @@ public class StoreServiceImpl implements StoreService {
 				throw new Exception();
 			}
 
-			log.info("store Created {} ", storeDto);
+			//log.info("store Created {} ", storeDto);
 			// 메뉴 생성 -> insert
 			List<Menu> menus = new ArrayList<Menu>();
 
@@ -106,56 +105,80 @@ public class StoreServiceImpl implements StoreService {
 				menus.add(menuItem);
 			}
 
-			if (storeDao.insertMenus(menus) < menus.size()) {
-				throw new Exception("메뉴 등록에 실패하였습니다.");
+			//메뉴가 있는 경우 삽입
+			if(menus.size()!=0) {
+				if (storeDao.insertMenus(menus) < menus.size()) {
+					throw new Exception("메뉴 등록에 실패하였습니다.");
+				}
+
+				log.info("menus Inserted {} ", menus);
 			}
-
-			log.info("menus Inserted {} ", menus);
-
+			
+			
+			
 			List<Tag> tags = new ArrayList<Tag>();
 			for (TagRequestDto tag : storeRequestDto.getTags()) {
 				Tag tagItem = Tag.builder().storeId(storeDto.getStoreId()).tagName(tag.getTagName()).build();
-
 				tags.add(tagItem);
 			}
 
-			if (storeDao.insertTags(tags) < tags.size()) {
-				throw new Exception("태그 등록에 실패하였습니다.");
+			// 태그가 있는 경우 삽입
+			if(tags.size()!=0) {
+				if (storeDao.insertTags(tags) < tags.size()) {
+					throw new Exception("태그 등록에 실패하였습니다.");
+				}
 			}
-
+			
+			
 			List<OpenInfo> openInfos = new ArrayList<OpenInfo>();
 			for (OpenInfoRequestDto openInfo : storeRequestDto.getOpenInfos()) {
 				OpenInfo openInfoItem = OpenInfo.builder().storeId(storeDto.getStoreId()).day(openInfo.getDay())
 						.openTime(openInfo.getOpenTime()).closeTime(openInfo.getCloseTime()).build();
 				openInfos.add(openInfoItem);
 			}
-			if (storeDao.insertOpenInfos(openInfos) < openInfos.size()) {
-				throw new Exception("영업 정보 등록에 실패하였습니다.");
+			
+			// 영업일 정보가 있는 경우 
+			if(openInfos.size()!=0) {
+				if (storeDao.insertOpenInfos(openInfos) < openInfos.size()) {
+					throw new Exception("영업 정보 등록에 실패하였습니다.");
+				}
 			}
+	
 
-//			// 리턴할 정보 -> 추후 논의 후 변경 
-			StoreDetailResponseDto storeDetailResponseDto = StoreDetailResponseDto.builder()
+			StoreHistoryRequestDto stroeHistroyRequestDto = StoreHistoryRequestDto.builder()
 															.storeId(storeDto.getStoreId())
-															.storeName(storeDto.getStoreName())
 															.address(storeDto.getAddress())
 															.positionX(storeDto.getPositionX())
 															.positionY(storeDto.getPositionY())
-															.isOpen(0)
-															.createdType(storeDto.getCreatedType())
-															.createdAt(storeDto.getCreatedAt())
-															.userId(storeDto.getUserId())
-															.categoryId(storeDto.getCategoryId())
-															.tags(tags)
-															.menus(menus)
-															.openInfos(openInfos)
 															.build();
+			// 영업 이력 하나 넣기 
+			storeDao.insertStoreHistory(stroeHistroyRequestDto);
 			
-			return storeDetailResponseDto;
+			
+			
+//			// 리턴할 정보 -> 추후 논의 후 변경 
+//			StoreDetailResponseDto storeDetailResponseDto = StoreDetailResponseDto.builder()
+//															.storeId(storeDto.getStoreId())
+//															.storeName(storeDto.getStoreName())
+//															.address(storeDto.getAddress())
+//															.positionX(storeDto.getPositionX())
+//															.positionY(storeDto.getPositionY())
+//															.isOpen(0)
+//															.createdType(storeDto.getCreatedType())
+//															.createdAt(storeDto.getCreatedAt())
+//															.userId(storeDto.getUserId())
+//															.categoryId(storeDto.getCategoryId())
+//															.tags(tags)
+//															.menus(menus)
+//															.openInfos(openInfos)
+//															.build();
+			
+			return storeDto.getStoreId();
 
 			
 		} catch (Exception e) {
 			log.info(e.getMessage());
-			return null;
+			return -1;
 		}
 	}
 
@@ -163,10 +186,10 @@ public class StoreServiceImpl implements StoreService {
 	public Boolean changeStoreStatusOpen(StoreHistoryRequestDto storeHistoryRequestDto) {
 		// TODO Auto-generated method stub
 		try {
-			if(storeDao.updateStoreOpenStatus(storeHistoryRequestDto) < 1) {
+			if (storeDao.updateStoreOpenStatus(storeHistoryRequestDto) < 1) {
 				throw new Exception("영업 시작 업데이트에 실패하였습니다.");
 			}
-			if(storeDao.insertStoreHistory(storeHistoryRequestDto) < 1) {
+			if (storeDao.insertStoreHistory(storeHistoryRequestDto) < 1) {
 				throw new Exception("영업 정보 이력 등록에 실패하였습니다.");
 			}
 			return true;
@@ -180,7 +203,7 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	public Boolean changeStoreStatusClose(int storeId) {
 		try {
-			if(storeDao.updateStoreCloseStatus(storeId) < 1) {
+			if (storeDao.updateStoreCloseStatus(storeId) < 1) {
 				throw new Exception("영업 종료 업데이트에 실패하였습니다.");
 			}
 			return true;
@@ -200,6 +223,5 @@ public class StoreServiceImpl implements StoreService {
 	public List<TodayOpenStoreResponseDto> getTodayOpenStores() {
 		return storeDao.selectTodayOpenStores();
 	}
-
 
 }

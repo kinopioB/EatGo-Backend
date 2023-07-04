@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StoreHistoryRequestDto {
+public class CreateStoreResponseDto {
 
 	private Integer storeId;
-	private String address;
-	private Double positionX;
-	private Double positionY;
+	
 }

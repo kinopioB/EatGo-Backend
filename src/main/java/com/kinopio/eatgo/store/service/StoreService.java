@@ -30,7 +30,7 @@ public interface StoreService {
 	List<TodayOpenStoreResponseDto> getTodayOpenStores();
 
 
-	StoreDetailResponseDto createStore(StoreRequestDto storeRequestDto);
+	Integer createStore(StoreRequestDto storeRequestDto);
 
 
 	Boolean changeStoreStatusOpen(StoreHistoryRequestDto storeHistoryRequestDto);

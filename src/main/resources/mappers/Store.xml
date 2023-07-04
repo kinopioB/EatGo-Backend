@@ -115,7 +115,8 @@
 	</select>
 	
 	<select id="selectTodayOpenStores" resultMap="TodayOpenStoreResult">
-		select * from store join category on store.category_id = category.category_id order by store_id 
+		select * from store join category on store.category_id = category.category_id order by store_id FETCH FIRST 10 ROWS ONLY
+		
 	</select>
 	
 	<insert id="insertStore" parameterType="StoreDto" useGeneratedKeys="true" keyProperty="storeId" keyColumn="store_id">

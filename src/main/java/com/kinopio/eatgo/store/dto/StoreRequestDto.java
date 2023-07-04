@@ -19,7 +19,7 @@ public class StoreRequestDto {
 	private Double positionX;
 	private Double positionY;
 	private Integer categoryId;
-	// private String thumbnail;
+	private String thumbnail;
 	private Integer createdType;
 	
 	// 메뉴 정보

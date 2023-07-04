@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kinopio.eatgo.store.dto.ReviewRequestDto;
 import com.kinopio.eatgo.store.dto.ReviewResponseDto;
 import com.kinopio.eatgo.store.dto.ApiResult;
+import com.kinopio.eatgo.store.dto.CreateStoreResponseDto;
 import com.kinopio.eatgo.store.dto.PopularStoreResponseDto;
 import com.kinopio.eatgo.store.dto.StoreDetailResponseDto;
 import com.kinopio.eatgo.store.dto.StoreHistoryRequestDto;
@@ -23,6 +24,7 @@ import com.kinopio.eatgo.store.dto.StoreSimpleResponseDto;
 import com.kinopio.eatgo.store.dto.TodayOpenStoreResponseDto;
 import com.kinopio.eatgo.store.service.StoreService;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -78,8 +80,16 @@ public class StoreRestController {
 	 * @return ResponseEntity<ApiResult>
 	 */
 	@PostMapping
-	public ResponseEntity<StoreDetailResponseDto> createStore(@RequestBody StoreRequestDto storeRequestDto) {
-		return new ResponseEntity<StoreDetailResponseDto>(storeService.createStore(storeRequestDto),HttpStatus.CREATED);
+	public ResponseEntity<CreateStoreResponseDto> createStore(@RequestBody StoreRequestDto storeRequestDto) {
+		log.info("create store request dto {} ", storeRequestDto);
+		
+		int result = storeService.createStore(storeRequestDto);
+		if(result == -1 ) {
+			return new ResponseEntity<>( null , HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		CreateStoreResponseDto createStoreResponseDto  = CreateStoreResponseDto.builder()
+														.storeId(result).build()
+;		return new ResponseEntity<CreateStoreResponseDto>(createStoreResponseDto,HttpStatus.CREATED);
 	}
 
 	/**
