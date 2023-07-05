@@ -143,7 +143,7 @@
 	</select>
 	
 	<insert id="insertStore" parameterType="StoreDto" useGeneratedKeys="true" keyProperty="storeId" keyColumn="store_id">
-		insert into store(store_name, user_id, address, position_x, position_y, isopen, category_id, created_type) values (#{storeName}, #{userId}, #{address}, #{positionX}, #{positionY}, #{isOpen}, #{categoryId}, #{createdType})
+		insert into store(store_name, user_id, info, thumbnail, address, position_x, position_y, isopen, category_id, created_type) values (#{storeName}, #{userId},#{info},#{thumbnail}, #{address}, #{positionX}, #{positionY}, #{isOpen}, #{categoryId}, #{createdType})
 	</insert>
 	
 
@@ -233,7 +233,7 @@
 	</select>
 	
 	<select id="selectStoreMypage" resultMap="MyPageStoreResult" parameterType="int">
-		SELECT store_name, thumbNail, isopen, c.category_id, category_name, user_name, s.store_id
+		SELECT store_name, thumbnail, isopen, c.category_id, category_name, user_name, s.store_id
 		FROM store s
 		JOIN category c
 		ON s.category_id = c.category_id 

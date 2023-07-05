@@ -100,6 +100,7 @@ public class StoreServiceImpl implements StoreService {
 			StoreDto storeDto = StoreDto.builder().storeName(storeRequestDto.getStoreName())
 					.userId(storeRequestDto.getUserId()).address(storeRequestDto.getAddress())
 					.positionX(storeRequestDto.getPositionX()).positionY(storeRequestDto.getPositionY())
+					.info(storeRequestDto.getInfo()).thumbnail(storeRequestDto.getThumbnail())
 					.categoryId(storeRequestDto.getCategoryId()).createdType(storeRequestDto.getCreatedType()).build();
 			storeDto = storeDao.insertStore(storeDto);
 			if (storeDto.getStoreId() == null) {

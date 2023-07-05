@@ -15,6 +15,7 @@ public class StoreRequestDto {
 	// 가게 정보 
 	private String storeName;
 	private Integer userId;
+	private String info;
 	private String address;
 	private Double positionX;
 	private Double positionY;

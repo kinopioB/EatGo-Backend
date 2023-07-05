@@ -16,6 +16,7 @@ public class StoreDto {
 	private String storeName;
 	private Integer userId;
 	private String address;
+	private String info;
 	private Double positionX;
 	private Double positionY;
 	private Integer isOpen;
