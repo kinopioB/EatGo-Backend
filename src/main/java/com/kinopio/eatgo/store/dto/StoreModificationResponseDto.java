@@ -23,7 +23,7 @@ public class StoreModificationResponseDto {
 
 	// 가게 정보
 	private Integer storeId;
-	private String storeName;
+	private String storeInfo;
 	private String address;
 	private Double positionX;
 	private Double positionY;
