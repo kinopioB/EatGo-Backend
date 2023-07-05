@@ -269,7 +269,7 @@
 		on s.store_id = a.ab
 		left join tag t
 		on s.store_id = t.store_id
-		where concat(cn, t.tag_name) like '%'|| #{searchFilter} ||'%'
+		where concat(concat(cn, t.tag_name), s.store_name) like '%'|| #{searchFilter} ||'%'
 	</select>
 	
 </mapper>
