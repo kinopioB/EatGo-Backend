@@ -15,7 +15,7 @@ public class StoreHistory {
 	private Integer storeId;
 	private Date openDate;
 	private String address;
-	private Integer positionX;
-	private Integer positionY;
+	private Double positionX;
+	private Double positionY;
 
 }
