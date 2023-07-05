@@ -79,6 +79,7 @@ public class StoreRestController {
 	public ResponseEntity<StoreDetailResponseDto> getStoreDetail(@PathVariable int storeId) {
 
 		StoreDetailResponseDto storeDetail = storeService.getStoreDetail(storeId);
+		log.info("Detail Response {} ", storeDetail);
 		return new ResponseEntity<>(storeDetail, HttpStatus.OK);
 	}
 

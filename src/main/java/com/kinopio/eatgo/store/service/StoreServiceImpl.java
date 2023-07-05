@@ -114,7 +114,7 @@ public class StoreServiceImpl implements StoreService {
 			for (MenuRequestDto menu : storeRequestDto.getMenus()) {
 				Menu menuItem = Menu.builder().storeId(storeDto.getStoreId()).menuName(menu.getMenuName())
 						.price(menu.getPrice()).amount(menu.getAmount()).thumbnail(menu.getThumbnail())
-						.isBest(menu.getIsBest()).build();
+						.info(menu.getInfo()).isBest(menu.getIsBest()).build();
 
 				menus.add(menuItem);
 			}
@@ -157,8 +157,13 @@ public class StoreServiceImpl implements StoreService {
 					throw new Exception("영업 정보 등록에 실패하였습니다.");
 				}
 			}
-	
-
+// 			영업이력 등록하기 ( 첫 등록 ) 
+			StoreHistoryRequestDto storeHistoryRequestDto = StoreHistoryRequestDto.builder().storeId(storeDto.getStoreId()).address(storeDto.getAddress())
+															.positionX(storeDto.getPositionX()).positionY(storeDto.getPositionY()).build();
+			if(storeDao.insertStoreHistory(storeHistoryRequestDto)< 1) {
+				throw new Exception("영업 이력 등록에 실패하였습니다. ");
+			}
+			
 //			// 리턴할 정보 -> 추후 논의 후 변경 
 			StoreDetailResponseDto storeDetailResponseDto = StoreDetailResponseDto.builder()
 					.storeId(storeDto.getStoreId()).storeName(storeDto.getStoreName()).address(storeDto.getAddress())

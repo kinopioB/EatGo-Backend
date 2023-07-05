@@ -34,6 +34,7 @@ public class UserRestController {
 	public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
 		log.info(loginRequestDto);
 		LoginResponseDto result = userService.getLoginUser(loginRequestDto);
+		log.info("Result{}", result);
 		return new ResponseEntity<LoginResponseDto>(result, HttpStatus.OK);
 	}
 
