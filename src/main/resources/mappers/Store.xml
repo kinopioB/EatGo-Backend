@@ -50,7 +50,7 @@
 		<result column="store_id" property="storeId"></result>
 		<result column="store_name" property="storeName"></result>
 		<result column="user_name" property="userName"></result>
-		<result column="thumbnail" property="thumbnail"></result>
+		<result column="thumbnail" property="thumbNail"></result>
 		<result column="category_id" property="categoryId"></result>
 		<result column="category_name" property="categoryName"></result>
 		<result column="isOpen" property="isOpen"></result>
@@ -233,7 +233,7 @@
 	</select>
 	
 	<select id="selectStoreMypage" resultMap="MyPageStoreResult" parameterType="int">
-		SELECT store_name, thumbNail, isopen, c.category_id, category_name, user_name, s.store_id
+		SELECT store_name, thumbnail, isopen, c.category_id, category_name, user_name, s.store_id
 		FROM store s
 		JOIN category c
 		ON s.category_id = c.category_id 
