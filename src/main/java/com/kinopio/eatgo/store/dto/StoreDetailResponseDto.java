@@ -25,6 +25,7 @@ public class StoreDetailResponseDto {
 	private Integer storeId;
 	private String storeName;
 	private String address;
+	private String info;
 	private Double positionX;
 	private Double positionY;
 	private Integer isOpen;
