@@ -53,6 +53,7 @@ public class StoreRestController {
 	@GetMapping("/search/{searchFilter}")
 	public ResponseEntity<List<StoreSimpleResponseDto>> getAllStores(@PathVariable String searchFilter) {	
 		List<StoreSimpleResponseDto> stores = storeService.getFilterStores(searchFilter);
+		log.info(stores);
 		return new ResponseEntity<List<StoreSimpleResponseDto>>(stores, HttpStatus.OK);
 	}
 
