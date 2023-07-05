@@ -259,17 +259,17 @@
   
 	<select id="selectFilterStores" parameterType="String" resultType="StoreSimpleResponseDto">
 		select * from (
-		    select s.store_id ab, listagg(tag_name, '') within group(order by tag_name) as tn
-		    from store s
-		    join tag t
-		    on s.store_id = t.store_id
-		    group by s.store_id
+    		select s.store_id ab, listagg(category_name, '') within group(order by category_name) as cn
+          	from store s
+          	join category c
+          	on s.category_id = c.category_id
+          	group by s.store_id
 		) a
 		join store s
 		on s.store_id = a.ab
-		join category c
-		on s.category_id = c.category_id
-		where concat(tn, c.category_name) like '%'|| #{searchFilter} ||'%'
+		left join tag t
+		on s.store_id = t.store_id
+		where concat(cn, t.tag_name) like '%'|| #{searchFilter} ||'%'
 	</select>
 	
 </mapper>
