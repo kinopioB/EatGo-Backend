@@ -33,7 +33,10 @@ public class UserRestController {
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
 		log.info(loginRequestDto);
+		
 		LoginResponseDto result = userService.getLoginUser(loginRequestDto);
+		
+		log.info(result);
 		return new ResponseEntity<LoginResponseDto>(result, HttpStatus.OK);
 	}
 
