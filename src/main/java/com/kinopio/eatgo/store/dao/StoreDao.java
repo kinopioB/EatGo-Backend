@@ -52,5 +52,6 @@ public interface StoreDao {
 	
 	
 	List<StoreSimpleResponseDto> selectFilterStore(String searchFilter);
+	String selectTokenAlert(int i);
 
 }
