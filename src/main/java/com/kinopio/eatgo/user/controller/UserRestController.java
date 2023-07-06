@@ -48,7 +48,7 @@ public class UserRestController {
 	public ResponseEntity<String> setUserFireBaseToken(@PathVariable int userId, @RequestBody String token) {
 		log.info("123 {}", userId);
 		log.info("456 {}", token);
-		String result = userService.setUserFireBaseToken(userId, token);
+		String result = userService.setUserFireBaseToken(userId, token.substring(1, token.length() - 1));
 		log.info(result);
 		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
