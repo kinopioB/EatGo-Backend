@@ -13,6 +13,7 @@
 		<result property="positionX" column="position_x"></result>
 		<result property="positionY" column="position_y"></result>
 		<result property="thumbnail" column="thumbnail"></result>
+		<result property="info" column="info"></result>
 		<result property="createdType" column="created_type"></result>
 		<result property="createdAt" column="created_at"></result>
 		
@@ -49,7 +50,6 @@
 	<resultMap id="MyPageStoreResult" type="StoreMyPageResponseDto">
 		<result column="store_id" property="storeId"></result>
 		<result column="store_name" property="storeName"></result>
-		<result column="user_name" property="userName"></result>
 		<result column="thumbnail" property="thumbNail"></result>
 		<result column="category_id" property="categoryId"></result>
 		<result column="category_name" property="categoryName"></result>
@@ -90,6 +90,11 @@
 		select * from tag where store_id=#{storeId}
 	</select>
 	
+<!-- 	<select id="selectTagsByUserId" parameterType="int" resultType="com.kinopio.eatgo.store.entity.Tag">
+		select * from tag where user_id=#{userId}
+	</select> -->
+	
+	
 	<select id="selectOpenInfoByStoreId" parameterType="int" resultType="com.kinopio.eatgo.store.entity.OpenInfo">
 		select * from open_info where store_id=#{storeId}
 	</select>
@@ -123,9 +128,15 @@
 
 	
 	<select id="selectAverageRating" parameterType="int" resultType="float">
-		SELECT AVG(rating) as rating_average FROM review WHERE store_id = #{storeId}
+		SELECT AVG(rating) as rating_average 
+		FROM app_user u
+		JOIN store s
+		ON u.user_id = s.user_id
+		JOIN review r
+		ON r.store_id = s.store_id
+		WHERE u.user_id = ${userId}	
 	</select>
-	
+			
 	<select id="selectPopularStores" resultType="PopularStoreResponseDto">
 	
 		SELECT s.store_id, s.store_name, s.thumbnail, c.category_id, c.category_name, s.info, COUNT(r.review_id) AS review_count
@@ -143,15 +154,15 @@
 	</select>
 	
 	<insert id="insertStore" parameterType="StoreDto" useGeneratedKeys="true" keyProperty="storeId" keyColumn="store_id">
-		insert into store(store_name, user_id, info, thumbnail, address, position_x, position_y, isopen, category_id, created_type) values (#{storeName}, #{userId},#{info},#{thumbnail}, #{address}, #{positionX}, #{positionY}, #{isOpen}, #{categoryId}, #{createdType})
+		insert into store(store_name, user_id, info, thumbnail, address, position_x, position_y, category_id, created_type) values (#{storeName}, #{userId},#{info},#{thumbnail}, #{address}, #{positionX}, #{positionY}, #{categoryId}, #{createdType})
 	</insert>
 	
 
 
 	<update id="insertMenus" parameterType="java.util.List">
-	   insert INTO menu(store_id, menu_name, price, amount, thumbnail, isbest) 
+	   insert INTO menu(store_id, menu_name, price, amount,info,  thumbnail, isbest) 
 	    <foreach collection="list" item="item" separator="UNION ALL">
-	   	   select #{item.storeId}, #{item.menuName}, #{item.price}, #{item.amount}, #{item.thumbnail}, #{item.isBest} from DUAL
+	   	   select #{item.storeId}, #{item.menuName}, #{item.price}, #{item.amount}, #{item.info}, #{item.thumbnail}, #{item.isBest} from DUAL
 	  </foreach>
 	</update>
 
@@ -205,8 +216,7 @@
 		SELECT u.user_name AS userName, r.content AS content,
 		r.created_at AS createdAt, r.rating AS rating
 		FROM review r
-		JOIN app_user
-		u
+		JOIN app_user u
 		ON r.user_id = u.user_id
 		WHERE store_id = #{storeId}
 	</select>
@@ -234,22 +244,28 @@
 	</select>
 	
 	<select id="selectStoreMypage" resultMap="MyPageStoreResult" parameterType="int">
-		SELECT store_name, thumbnail, isopen, c.category_id, category_name, user_name, s.store_id
+		SELECT store_name, thumbnail, isopen, c.category_id, category_name, s.store_id
 		FROM store s
 		JOIN category c
 		ON s.category_id = c.category_id 
-		JOIN app_user u
-		ON s.user_id = u.user_id
-		WHERE s.store_id = ${storeId}
+		WHERE s.user_id = #{userId}
+        ORDER BY s.store_id ASC
+		FETCH FIRST 1 ROWS ONLY
 	</select>
 	
 	<select id="selectReviewCounting" parameterType="int" resultType="int">
-		SELECT COUNT(review_id) as reviewNum FROM review WHERE store_id = #{storeId}
+		SELECT COUNT(review_id) as reviewNum 
+		FROM app_user u
+		JOIN store s
+		ON u.user_id = s.user_id
+		JOIN review r
+		ON r.store_id = s.store_id
+		WHERE u.user_id = #{userId}
 	</select>
 	
 	<select id="selectStoreModificationMyPage" parameterType="int" resultMap="ModificationStoreResult">
 		SELECT store_id, info, address, position_x, position_y, created_type
-		FROM store WHERE store_id = ${store_id}
+		FROM store WHERE store_id = #{storeId}
 	</select>
 	
 	<select id="selectOpenInfosForModification" parameterType="int" resultType="OpenInfo">
@@ -272,5 +288,11 @@
 		on s.store_id = t.store_id
 		where concat(concat(cn, t.tag_name), s.store_name) like '%'|| #{searchFilter} ||'%'
 	</select>
+	
+	<select id="selectTokenAlert" parameterType="Int" resultType="String">
+		select token from app_user join store on store.user_id = app_user.user_id where store_id=#{i} FETCH FIRST 1 ROWS ONLY
+	
+	</select>
+	
 	
 </mapper>

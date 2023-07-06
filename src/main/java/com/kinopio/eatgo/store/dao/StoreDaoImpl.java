@@ -51,9 +51,9 @@ public class StoreDaoImpl implements StoreDao {
 	}
 	
 	@Override
-	public Float selectStoreAverageRating(Integer storeId) {
+	public Float selectStoreAverageRating(Integer userId) {
 		String statement = "store.selectAverageRating";
-		return sqlSession.selectOne(statement, storeId);
+		return sqlSession.selectOne(statement, userId);
 	}
 	
 	@Override
@@ -152,15 +152,15 @@ public class StoreDaoImpl implements StoreDao {
 
 	
 	@Override
-	public StoreMyPageResponseDto selectStoreMyPage(int storeId) {
+	public StoreMyPageResponseDto selectStoreMyPage(int userId) {
 		String statement = "store.selectStoreMypage";
-		return sqlSession.selectOne(statement, storeId);
+		return sqlSession.selectOne(statement, userId);
 	}
 
 	@Override
-	public Integer selectReviewCount(int storeId) {
+	public Integer selectReviewCount(int userId) {
 		String statement = "store.selectReviewCounting";
-		return sqlSession.selectOne(statement, storeId);
+		return sqlSession.selectOne(statement, userId);
 	}
 
 	@Override
@@ -168,6 +168,14 @@ public class StoreDaoImpl implements StoreDao {
 		String statement = "store.selectStoreModificationMyPage";
 		return sqlSession.selectOne(statement, storeId);
 	}
+
+	@Override
+	public String selectTokenAlert(int i) {
+		String statement = "store.selectTokenAlert";
+		return sqlSession.selectOne(statement,i );
+		
+	}
+	
 	
 	
 }

@@ -43,9 +43,9 @@ public interface StoreService {
 
 	List<ReviewResponseDto> getAllStoreReviews(int storeId);
 
-	Boolean createReview(ReviewRequestDto reviewRequestDto);
+	String createReview(ReviewRequestDto reviewRequestDto);
 	
-	StoreMyPageResponseDto getStoreMyPage(int storeId);
+	StoreMyPageResponseDto getStoreMyPage(int userId);
 	StoreModificationResponseDto getModificationStoreMyPage(int storeId);
 	
 	List<StoreSimpleResponseDto> getFilterStores(String searchFilter);

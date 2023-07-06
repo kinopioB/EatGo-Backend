@@ -17,19 +17,25 @@ import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 public class JwtUtil {
 	private final String baseKey = "kinopiobkinopiobkinopiobkinopiobkinopiobkinopiobkinopiobkinopiob";
 	private final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 	
 	private Key createKey() {
-	    // signiture¿¡ ´ëÇÑ Á¤º¸´Â Byte array·Î ±¸¼ºµÇ¾îÀÖ½À´Ï´Ù.
+	    // signitureï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Byte arrayï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½Ö½ï¿½ï¿½Ï´ï¿½.
+		log.info("1");
 	    byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(baseKey);
+	    log.info("2");
 	    Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+	    log.info("3");
 	    return signingKey;
 	}
 	
 	public String createJwt(LoginRequestDto loginRequestDto) throws Exception {
+		
 	    Map<String, Object> headerMap = new HashMap<String, Object>();
 	    headerMap.put("typ", "JWT");
 	    headerMap.put("alg", "HS256");

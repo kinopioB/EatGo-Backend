@@ -12,6 +12,7 @@ public class MenuRequestDto {
 	private String menuName;
 	private Integer price;
 	private Integer amount;
+	private String info;
 	private String thumbnail;
 	private Integer isBest;
 }
