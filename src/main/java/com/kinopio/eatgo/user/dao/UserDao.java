@@ -13,5 +13,7 @@ public interface UserDao {
 	List<ReviewResponseDto> selectStoreReviews(int userId);
 	
 	LoginRequestDto insertUser(LoginRequestDto loginRequestDto);
+	
+	String updateUserFireBaseToken(int userId, String token);
    
 }

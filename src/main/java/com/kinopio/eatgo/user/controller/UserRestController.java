@@ -32,8 +32,6 @@ public class UserRestController {
 
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
-		log.info(loginRequestDto);
-		
 		LoginResponseDto result = userService.getLoginUser(loginRequestDto);
 
 		return new ResponseEntity<LoginResponseDto>(result, HttpStatus.OK);
@@ -44,6 +42,15 @@ public class UserRestController {
 
 		List<ReviewResponseDto> reviewsResult = userService.getAllReviews(userId);
 		return new ResponseEntity<List<ReviewResponseDto>>(reviewsResult, HttpStatus.OK);
+	}
+	
+	@PostMapping("/token/{userId}")
+	public ResponseEntity<String> setUserFireBaseToken(@PathVariable int userId, @RequestBody String token) {
+		log.info("123 {}", userId);
+		log.info("456 {}", token);
+		String result = userService.setUserFireBaseToken(userId, token);
+		log.info(result);
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 
 }

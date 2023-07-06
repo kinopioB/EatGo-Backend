@@ -21,4 +21,8 @@
 		INSERT INTO app_user (user_social_id, user_name, login_type, role)
 		VALUES (#{userSocialId}, #{userName}, #{loginType}, #{role})
 	</insert>
+	
+	<update id="updateFireBaseToken" parameterType="hashmap">
+		UPDATE app_user set token = #{token} WHERE user_id = #{userId}
+	</update>
 </mapper>

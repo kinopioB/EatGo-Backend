@@ -3,7 +3,9 @@ package com.kinopio.eatgo.user.dao;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
@@ -40,6 +42,19 @@ public class UserDaoImpl implements UserDao {
 		sqlSession.insert(statement, loginRequestDto);
 		log.info("55555555555555555555555555555");
 		return loginRequestDto;
+	}
+	
+	@Override
+	public String updateUserFireBaseToken(int userId, String token) {
+		Map<String, String> map = new HashMap<String, String>();
+		
+		map.put("userId", Integer.toString(userId));
+		map.put("token", token);
+		
+		String statement = "user.updateFireBaseToken";
+		sqlSession.update(statement, map);
+		
+		return token;
 	}
 
 }
