@@ -57,6 +57,10 @@ public class UserServiceImpl implements UserService{
 	public List<ReviewResponseDto> getAllReviews(int userId) {
 		return userDao.selectStoreReviews(userId);
 	}
-
+	
+	@Override
+	public String setUserFireBaseToken(int userId, String token) {
+		return userDao.updateUserFireBaseToken(userId, token);
+	}
 	
 }

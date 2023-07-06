@@ -212,6 +212,7 @@
 	</select>
 
 	<select id="selectCategoryStores"
+		parameterType="int"
 		resultType="StoreSimpleResponseDto">
 		SELECT
 		s.position_x, s.position_y, s.store_id,
@@ -221,7 +222,7 @@
 		JOIN category
 		c
 		ON s.category_id = c.category_id
-		WHERE s.category_id = 1
+		WHERE s.category_id = #{categoryId}
 	</select>
 
 	<select id="selectTagStores" resultType="StoreSimpleResponseDto">

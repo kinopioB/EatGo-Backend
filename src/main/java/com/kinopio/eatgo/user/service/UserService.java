@@ -12,5 +12,7 @@ public interface UserService {
 	LoginResponseDto getLoginUser(LoginRequestDto loginRequestDto);
 
 	List<ReviewResponseDto> getAllReviews(int userId);
+	
+	String setUserFireBaseToken(int userId, String token);
 
 }
