@@ -48,7 +48,7 @@ public class StoreServiceImpl implements StoreService {
 	public String createReview(ReviewRequestDto reviewRequestDto) {
 		try {
 			storeDao.insertReview(reviewRequestDto);
-			String token = storeDao.selectTokenAlert(3);
+			String token = storeDao.selectTokenAlert(reviewRequestDto.getStoreId());
 			if (token == null)
 				throw new Exception();
 			return token;

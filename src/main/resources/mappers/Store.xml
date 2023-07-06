@@ -288,7 +288,8 @@
 	</select>
 	
 	<select id="selectTokenAlert" parameterType="Int" resultType="String">
-		select token from app_user WHERE user_id = #{i}
+		select token from app_user join store on store.user_id = app_user.user_id where store_id=#{i} FETCH FIRST 1 ROWS ONLY
+	
 	</select>
 	
 	
