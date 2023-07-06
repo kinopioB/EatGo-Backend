@@ -2,6 +2,9 @@ package com.kinopio.eatgo.store.controller;
 
 
 import java.util.List;
+
+import javax.mail.internet.HeaderTokenizer.Token;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -161,15 +164,16 @@ public class StoreRestController {
 	public ResponseEntity<ApiResult> createReview(@PathVariable int storeId,
 			@RequestBody ReviewRequestDto reviewRequestDto) {
 		reviewRequestDto.setStoreId(storeId);
-		Boolean result = storeService.createReview(reviewRequestDto);
-		if (result) {
+		String result = storeService.createReview(reviewRequestDto);
+		log.info("토큰 : {}",result);
+		if (result==null) {
 			return new ResponseEntity<ApiResult>(
-					ApiResult.builder().status(ApiResult.STATUS_SUCCESS).message("가게 등록에 실패하였습니다.").build(),
-					HttpStatus.CREATED);
+					ApiResult.builder().status(ApiResult.STATUS_FAIL).message("리뷰 등록에 실패하였습니다.").build(),
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<ApiResult>(
-				ApiResult.builder().status(ApiResult.STATUS_FAIL).message("리뷰 등록에 실패하였습니다.").build(),
-				HttpStatus.INTERNAL_SERVER_ERROR);
+				ApiResult.builder().status(ApiResult.STATUS_SUCCESS).message(result).build(),
+				HttpStatus.CREATED);
 	}
 
 	/** 
@@ -221,11 +225,12 @@ public class StoreRestController {
 	 * 마이페이지 (가게) 조회
 	 * @return ResponseEntity<List<TodayOpenStoreResponseDto>> 
 	 */
-	@GetMapping("mypage/{storeId}")
-	public ResponseEntity<StoreMyPageResponseDto> getStoreMyPage(@PathVariable int storeId){
-		
-		StoreMyPageResponseDto storeMyPage = storeService.getStoreMyPage(storeId);
-		
+	@GetMapping("mypage/{userId}")
+	public ResponseEntity<StoreMyPageResponseDto> getStoreMyPage(@PathVariable int userId){
+		log.info("mypage - check : {}", userId);
+		StoreMyPageResponseDto storeMyPage = storeService.getStoreMyPage(userId);
+		log.info("mypage - storeMyPage : {}", storeMyPage);
+
 		return new ResponseEntity<StoreMyPageResponseDto>(storeMyPage, HttpStatus.OK);
 	}
 	
@@ -240,6 +245,4 @@ public class StoreRestController {
 		log.info("storeMypage : {}", storeMyPage);
 		return new ResponseEntity<StoreModificationResponseDto>(storeMyPage, HttpStatus.OK);
 	}
-	
-	
 }
