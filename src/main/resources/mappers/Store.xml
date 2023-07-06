@@ -13,6 +13,7 @@
 		<result property="positionX" column="position_x"></result>
 		<result property="positionY" column="position_y"></result>
 		<result property="thumbnail" column="thumbnail"></result>
+		<result property="info" column="info"></result>
 		<result property="createdType" column="created_type"></result>
 		<result property="createdAt" column="created_at"></result>
 		
@@ -153,15 +154,15 @@
 	</select>
 	
 	<insert id="insertStore" parameterType="StoreDto" useGeneratedKeys="true" keyProperty="storeId" keyColumn="store_id">
-		insert into store(store_name, user_id, info, thumbnail, address, position_x, position_y, isopen, category_id, created_type) values (#{storeName}, #{userId},#{info},#{thumbnail}, #{address}, #{positionX}, #{positionY}, #{isOpen}, #{categoryId}, #{createdType})
+		insert into store(store_name, user_id, info, thumbnail, address, position_x, position_y, category_id, created_type) values (#{storeName}, #{userId},#{info},#{thumbnail}, #{address}, #{positionX}, #{positionY}, #{categoryId}, #{createdType})
 	</insert>
 	
 
 
 	<update id="insertMenus" parameterType="java.util.List">
-	   insert INTO menu(store_id, menu_name, price, amount, thumbnail, isbest) 
+	   insert INTO menu(store_id, menu_name, price, amount,info,  thumbnail, isbest) 
 	    <foreach collection="list" item="item" separator="UNION ALL">
-	   	   select #{item.storeId}, #{item.menuName}, #{item.price}, #{item.amount}, #{item.thumbnail}, #{item.isBest} from DUAL
+	   	   select #{item.storeId}, #{item.menuName}, #{item.price}, #{item.amount}, #{item.info}, #{item.thumbnail}, #{item.isBest} from DUAL
 	  </foreach>
 	</update>
 
