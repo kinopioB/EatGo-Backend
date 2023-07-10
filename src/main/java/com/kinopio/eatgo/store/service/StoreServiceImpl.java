@@ -2,10 +2,13 @@ package com.kinopio.eatgo.store.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kinopio.eatgo.constant.CashingKey;
 import com.kinopio.eatgo.store.dao.StoreDao;
 import com.kinopio.eatgo.store.dto.MenuRequestDto;
 import com.kinopio.eatgo.store.dto.OpenInfoRequestDto;
@@ -38,6 +41,8 @@ import lombok.extern.log4j.Log4j2;
 public class StoreServiceImpl implements StoreService {
 
 	private final StoreDao storeDao;
+	private final RedisTemplate<String, Object> redisTemplate;
+
 
 	@Override
 	public List<StoreSimpleResponseDto> getAllStores() {
@@ -81,8 +86,22 @@ public class StoreServiceImpl implements StoreService {
 		return storeSummary;
 	}
 
+	/**
+	 * 가게 상세 정보 캐싱 도
+	 */
 	@Override
 	public StoreDetailResponseDto getStoreDetail(int storeId) {
+		
+		String cacheKey = CashingKey.FOOD_TRUCK_DETAIL_CACHE_KEY + storeId;
+
+		
+		StoreDetailResponseDto cachedData = getCachedStoreDetail(cacheKey);
+		
+		if(cachedData != null) {
+			log.info("[REDIS CACHED] Store Detail Hit {}", cachedData);
+			return cachedData;
+		}
+		log.info("[REDIS CACHED] " + cacheKey + " Missed ");
 		StoreDetailResponseDto storeDetail = storeDao.selectStoreDetailById(storeId);
 		Float avg = storeDao.selectStoreAverageRating(storeId);
 
@@ -91,10 +110,21 @@ public class StoreServiceImpl implements StoreService {
 		}
 
 		storeDetail.setRatingAverage(avg);
+		cacheStoreDetail(cacheKey, storeDetail);
 
 		return storeDetail;
 	}
 
+	private StoreDetailResponseDto getCachedStoreDetail(String cacheKey){
+		return (StoreDetailResponseDto) redisTemplate.opsForValue().get(cacheKey);
+	}
+	
+	private void cacheStoreDetail(String cacheKey, StoreDetailResponseDto cachingData) {
+		redisTemplate.opsForValue().set(cacheKey,cachingData, 1, TimeUnit.DAYS);
+        log.info("[REDIS] Store Detail - Cache 저장 - {}", cacheKey);
+	}
+	
+	
 	@Transactional
 	@Override
 	public Integer createStore(StoreRequestDto storeRequestDto) {
